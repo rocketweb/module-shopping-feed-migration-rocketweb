@@ -1,0 +1,12 @@
+{
+  "package": "rocketweb/module-shopping-feeds-google",
+  "version": "2.3.4",
+  "patch": "rocketweb-shopping-feeds-google-2.3.4-runtime-compatibility.patch",
+  "patch_sha256": "befab78ccfeedd3e20a3371ddf71e1ee2a4ae718e0e22a201221bc29b82ffe35",
+  "files": {
+    "Model/Product/Mapper/Google/Simple/IdentifierExists.php": {
+      "original_sha256": "53217317311cbeb33ed14a10858ae0538510ba964fbf1bf248f46e9350384605",
+      "patched_sha256": "b5f6437f445ce7054e943abcae5746748cf26ddc6d943315d5ed14303c098c4b"
+    }
+  }
+}

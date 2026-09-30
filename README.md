@@ -2,12 +2,13 @@
 
 An optional Magento module that copies Rocket Web Shopping Feeds configuration into `MageOS_ShoppingFeed`. Install it only on stores that are migrating. The main shopping feed module does not depend on this package.
 
-This is an unreleased development implementation. Disposable Mage-OS 3.5 checks cover Composer installation/removal, DI compilation, authenticated Admin import/activation/rollback, ACL and CSRF rejection, complex products, store and website scopes, loopback FTP/SFTP uploads, receipt retention, and backup restoration. Tests found legacy compatibility defects and material differences in generated stock values and row counts. A representative store migration and an approved legacy compatibility path remain release requirements. See the [acceptance record](docs/ACCEPTANCE-2026-09-30.md). No Packagist availability is implied.
+This is an unreleased development implementation. Disposable Mage-OS 3.5 checks cover Composer installation/removal, DI compilation, authenticated Admin import/activation/rollback, ACL and CSRF rejection, complex products, store and website scopes, loopback FTP/SFTP uploads, receipt retention, and backup restoration. Opt-in legacy compatibility patches passed local acceptance. Tests also found material differences in stock values, row counts, URLs and Google columns. A representative store migration and recipient acceptance remain release requirements. See the [acceptance record](docs/ACCEPTANCE-2026-09-30.md). No Packagist availability is implied.
 
 ## What it does
 
 - Imports one feed at a time with its store, type, saved settings, and inherited defaults.
 - Preserves column maps, filters, category mappings, Google inventory settings, and promotion configuration when supported by the destination.
+- Converts null column parameters to empty strings for destination compatibility and lists this conversion in the preview. Source records remain unchanged.
 - Creates a disabled destination feed with microdata off. Schedules and encrypted upload credentials are held in an encrypted database receipt until activation.
 - Keeps the original feed and database records intact.
 - Requires a current preview token and an operator-supplied backup reference before import. The reference records the operator's completed backup; the module does not create or verify that external backup.
@@ -21,9 +22,7 @@ The package identity is `rocketweb/module-shopping-feed-migration-rocketweb`; th
 
 The initial source baseline is Rocket Web Shopping Feeds 2.3.4, including its Google Shopping, Google Local Inventory, and Google Promotions add-ons. The destination dependency is `mage-os/module-shopping-feed:^1.1`. Other legacy versions and customized installations require staging validation. Both modules must be on the same Magento installation, with the same encryption key. Cross-store database imports are not supported.
 
-Unmodified Rocket Web 2.3.4 CLI commands do not load on the tested Mage-OS 3.5 / Symfony 7.4 stack: their `execute()` methods omit Symfony's required `int` return type. The disposable acceptance copy added that return type to both legacy commands. This package does not modify or patch the legacy module. Resolve legacy compatibility on staging before following the installation commands below.
-
-The legacy default Generic and Google Shopping maps also failed during generation in `AdditionalImageLink`, which accesses an undefined `$feed` property. The imported default maps generated successfully in the destination, but the legacy failure prevented a complete output comparison. That legacy mapper was not patched during acceptance.
+Unmodified Rocket Web 2.3.4 has runtime failures on the tested Mage-OS 3.5 / Symfony 7.4 stack: missing command return types, image-mapper errors, and unhandled null parameters. [Opt-in compatibility patches](docs/LEGACY-COMPATIBILITY.md) address the reproduced failures in the base and Google Shopping packages. Their regression tests, Composer application and native CLI generation passed in the disposable environment. Installing this migration module does not apply them automatically. Validate the exact legacy packages and existing customizations on staging before installation.
 
 Legacy module code and feed definitions must remain installed and enabled during import. Remaining legacy tables alone are insufficient to recover inherited defaults. The reader merges `shoppingfeeds.xml` from enabled modules, then checks selected configuration paths and directives against the destination. The original inventory XML omits an encoding element required by its own XSD, so this module uses a compatibility envelope schema and validates the selected settings separately.
 
@@ -63,7 +62,7 @@ bin/magento shopping-feed:migrate:rocketweb import --feed=7 --apply \
 
 Generate a test preview using the destination module's test mode. Check column order, product IDs/counts, prices, stock, category mappings, variants, promotion output, and encoding. During this stage the imported feed has no active schedules or upload rows.
 
-Copied configuration does not guarantee identical output. The initial simple-product test preserved row values with Google column reordering. Expanded tests found configurable variants changing from `out_of_stock` to `in_stock`, and Local Inventory omitting grouped/bundle parent rows that had no source items. Promotions output used lowercase enum values and added `shopping_ads` and `free_listings` destination columns. Compare row counts, stock values, actual files, and recipient requirements before activation.
+Copied configuration does not guarantee identical output. Expanded tests found configurable variants changing from `out_of_stock` to `in_stock`, and Local Inventory omitting grouped/bundle parent rows that had no source items. The destination preserved a nonstandard URL port, added Google variant columns, used `promotion_id` instead of `promotions_id`, and changed `identifier_exists` output. Promotions output used lowercase enum values and added `shopping_ads` and `free_listings` destination columns. Compare row counts, stock values, URLs, headers, actual files, and recipient requirements before activation.
 
 Before activation, disable the original **feed**, drain its queued/pending work, and stop any external commands that can restart it. Review custom code, shared settings, and the recipient's fetch URL. The migration module does not control external cron or another administrator who re-enables the original feed.
 

@@ -1,0 +1,96 @@
+diff --git a/Console/Command/GenerateCommand.php b/Console/Command/GenerateCommand.php
+--- a/Console/Command/GenerateCommand.php
++++ b/Console/Command/GenerateCommand.php
+@@ -104,7 +104,7 @@
+      * @param InputInterface                                           $input
+      * @param OutputInterface|\Symfony\Component\Console\Output\Output $output
+      */
+-    protected function execute(InputInterface $input, OutputInterface $output)
++    protected function execute(InputInterface $input, OutputInterface $output): int
+     {
+         $this->state->setAreaCode('frontend');
+         $feedId = $input->getArgument(self::INPUT_KEY_FEED_ID);
+diff --git a/Console/Command/ScheduleCommand.php b/Console/Command/ScheduleCommand.php
+--- a/Console/Command/ScheduleCommand.php
++++ b/Console/Command/ScheduleCommand.php
+@@ -53,7 +53,7 @@
+      * @param InputInterface                                           $input
+      * @param OutputInterface|\Symfony\Component\Console\Output\Output $output
+      */
+-    protected function execute(InputInterface $input, OutputInterface $output)
++    protected function execute(InputInterface $input, OutputInterface $output): int
+     {
+         $this->schedule->execute();
+         if ($output->isVerbose()) {
+diff --git a/Model/Product/Mapper/Generic/Configurable/Associated/Url.php b/Model/Product/Mapper/Generic/Configurable/Associated/Url.php
+--- a/Model/Product/Mapper/Generic/Configurable/Associated/Url.php
++++ b/Model/Product/Mapper/Generic/Configurable/Associated/Url.php
+@@ -52,7 +52,7 @@
+         // @var $product \Magento\Catalog\Model\Product
+         $product = $adapter->getProduct();
+ 
+-        $urlQuery = array_key_exists('param', $params) ? $params['param'] : '';
++        $urlQuery = (string)($params['param'] ?? '');
+         if (substr($urlQuery, 0, 1) == '?') {
+             $urlQuery = substr($urlQuery, 1);
+         }
+diff --git a/Model/Product/Mapper/Generic/Grouped/Associated/Url.php b/Model/Product/Mapper/Generic/Grouped/Associated/Url.php
+--- a/Model/Product/Mapper/Generic/Grouped/Associated/Url.php
++++ b/Model/Product/Mapper/Generic/Grouped/Associated/Url.php
+@@ -39,7 +39,7 @@
+         // @var $product \Magento\Catalog\Model\Product
+         $product = $adapter->getProduct();
+ 
+-        $urlQuery = array_key_exists('param', $params) ? $params['param'] : '';
++        $urlQuery = (string)($params['param'] ?? '');
+         if (substr($urlQuery, 0, 1) == '?') {
+             $urlQuery = substr($urlQuery, 1);
+         }
+diff --git a/Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php b/Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php
+--- a/Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php
++++ b/Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php
+@@ -68,9 +68,10 @@
+             }
+         }
+         $glue = ",";
+-        $delimiter = $this->feed->getConfig('output_params_delimiter', "\t");
+-        $delimiter_other = $this->feed->getConfig('output_params_delimiter_other', "\t");
+-        if (strip($delimiter) == $glue || strip($delimiter_other) == $glue) {
++        $feed = $this->getAdapter()->getFeed();
++        $delimiter = $feed->getConfig('output_params_delimiter', "\t");
++        $delimiter_other = $feed->getConfig('output_params_delimiter_other', "\t");
++        if (trim($delimiter) == $glue || trim($delimiter_other) == $glue) {
+             $glue = "|";
+         }
+         $cell = implode($glue, $urls);
+diff --git a/Model/Product/Mapper/Generic/Simple/Shipping.php b/Model/Product/Mapper/Generic/Simple/Shipping.php
+--- a/Model/Product/Mapper/Generic/Simple/Shipping.php
++++ b/Model/Product/Mapper/Generic/Simple/Shipping.php
+@@ -68,8 +68,13 @@
+      */
+     public function map(array $params = [])
+     {
+-        $allowedCountries = array_filter($this->getAdapter()->getFeed()->getConfig('shipping_country'));
+-        if (!is_array($allowedCountries) || count($allowedCountries) == 0) {
++        $allowedCountries = $this->getAdapter()->getFeed()->getConfig('shipping_country');
++        if (!is_array($allowedCountries)) {
++            return '';
++        }
++
++        $allowedCountries = array_filter($allowedCountries);
++        if (count($allowedCountries) == 0) {
+             return '';
+         }
+ 
+diff --git a/Model/Product/Mapper/Generic/Simple/Url.php b/Model/Product/Mapper/Generic/Simple/Url.php
+--- a/Model/Product/Mapper/Generic/Simple/Url.php
++++ b/Model/Product/Mapper/Generic/Simple/Url.php
+@@ -39,7 +39,7 @@
+         // @var $product \Magento\Catalog\Model\Product
+         $product = $adapter->getProduct();
+ 
+-        $urlQuery = array_key_exists('param', $params) ? $params['param'] : '';
++        $urlQuery = (string)($params['param'] ?? '');
+         if (substr($urlQuery, 0, 1) == '?') {
+             $urlQuery = substr($urlQuery, 1);
+         }

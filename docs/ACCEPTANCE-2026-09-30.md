@@ -109,9 +109,35 @@ The main-module notice is in `/private/tmp/shopping-feed-migration-discovery-202
 - Magento XML validation passed for 24 files. Consolidation validation passed for eight feed types. Its legacy-identifier guard permits only exact discovery literals in the notice/test files. A negative probe confirmed legacy PHP class references still fail that guard.
 - `composer suggest` awaits package publication. The installation link must resolve to the published README before the notice is released.
 
+## Compatibility continuation
+
+The following compatibility continuation supersedes the earlier unpatched-generation limitation; it does not establish real-store acceptance.
+
+### Legacy patches and native CLI continuation
+
+Two opt-in patches now cover the exact base and Google Shopping 2.3.4 packages. The base patch fixes command return types, image mapper feed access and `strip()`, the shipping-country type check, and null query parameters in the simple/configurable/grouped URL mappers. The Google patch handles a null identifier parameter. Eight source files are covered by original/patched SHA-256 manifests and a read-only preflight. Neither original source checkout was edited. No patching plugin or automatic legacy modification was added to the migration module.
+
+The patches were generated with `symplify/vendor-patches:12.2.0`, combined by package, and applied by `cweagans/composer-patches:2.0.0` during actual Composer reinstalls of mirrored path packages. All patched hashes matched. The preflight rejected customized files and a different version for both packages. Reversing each patch in a separate copy restored the original hashes. See [the opt-in installation and reversal instructions](LEGACY-COMPATIBILITY.md).
+
+The strict compatibility suite passed **23 tests, 55 assertions**. Each failure class was reproduced before correction, including deprecations that Magento turns into exceptions. The complete patches passed `setup:upgrade`, DI compilation, and native legacy CLI test generation for Generic and Google Shopping. Each native test listed the configurable parent and two variants. Schedule-command help also loaded successfully; the scheduler was not run.
+
+Full-default legacy generation now succeeds. Generic produces seven rows and 17 columns on both sides. Google Shopping produces seven rows with 21 legacy columns and 29 destination columns. Additional observed differences:
+
+- All generated product URLs preserve the nonstandard loopback port in the destination; legacy drops it. Configurable variant links in the second view also add `___store=migration_second` in the destination.
+- Google uses `promotion_id` instead of `promotions_id` and adds `age_group`, `color`, `gender`, `item_group_title`, `material`, `pattern`, `size`, and `variant_option`.
+- The fixture's Google `identifier_exists` changes from `FALSE` to empty. The prior variant-stock and Local Inventory parent-row differences remain.
+
+These are measured output differences requiring recipient review, not importer equivalence claims. The runtime comparison and detailed per-field differences are in `compatibility-comparison.json` and [committed compatibility evidence](evidence/2026-09-30-legacy-compatibility.json).
+
+Native destination CLI testing then reproduced an importer defect: legacy inherited column maps contain null parameters, which break the destination Generic URL mapper under normal PHP error reporting. The prior direct-generation harness suppressed deprecations and missed this. The planner now converts only null parameters to empty strings in product and replacement maps, lists the conversion in preview, and preserves source records, missing keys, zero, false and configured parameters. Three regression tests failed before the fix. The importer suite now passes **36 tests, 92 assertions**.
+
+Fresh sources 208/209 imported through the fixed planner. Native destination CLI generation listed three rows for each with exit code zero. Both imports remained disabled, with no schedules/uploads, and source records were preserved. Previously imported historical fixtures were not rewritten. Evidence: `normalized-import-result.json`, `normalized-destination-208.log`, `normalized-destination-209.log` and `normalized-import.log`.
+
+The final compatibility backup restored 19 tables and decrypted all sixteen receipts in `migration_restore_compat`. A separate archive restored 502 files, including patched legacy code and importer source, with matching bytes. Both `after-compatibility-acceptance.sql` and `after-compatibility-files.tar.gz` have mode `0600`. Use these artifacts to resume the latest checkpoint. Evidence: `compatibility-restore.log`, `compatibility-restore-result.json`, and `after-compatibility-restored/`.
+
 ## Remaining release gates
 
-- Resolve and approve legacy CLI compatibility and the legacy default-map image-mapper failure on the intended platform. The fixture CLI adjustment is not distributed by this module.
+- Validate the opt-in legacy patches on the intended platform and with existing customizations. Local Composer path-package application passed; actual store distributions and other platform versions remain untested.
 - Repeat acceptance with representative store data and custom integrations. Review the observed variant-stock and Local Inventory row-count changes. Synthetic coverage now includes configurable/grouped/bundle products, default/custom maps, categories, source-code mapping, and website/store scopes; it does not establish acceptance for a real store.
 - Test the actual recipient and URL cutover. FTP and SFTP passed only on loopback.
 - Repeat Composer/deployment checks on the exact supported platform. Local path installation passed; published package discovery/distribution remains unverified. Validate Magento Open Source separately from Mage-OS 3.5.
@@ -119,6 +145,6 @@ The main-module notice is in `/private/tmp/shopping-feed-migration-discovery-202
 
 ## Resuming the disposable test
 
-The final Composer-installed destination is v1.1.0, with importer `7c390cf`. The later importer change only expands preview warning text. The development destination and notice remain in `destination-development`. Test services are stopped after validation. MariaDB used tmpfs, so its stopped container is removed; protected SQL backups are the recovery artifacts.
+The final Composer-installed destination is v1.1.0; the importer contains the null-parameter fix. The disposable base and Google legacy copies have the opt-in patches applied. The development destination and notice remain in `destination-development`. Test services are stopped after validation. MariaDB used tmpfs, so its stopped container is removed; protected SQL backups are the recovery artifacts.
 
 The directory contains the install script and guarded runtime probes (`runtime-bootstrap.php`, `seed.php`, `compare.php`, `promotions.php`, `check-import-and-preview.php`, `check-upload.php`, `lifecycle-check.php`, and `verify-v1.1.php`). Seed/migration probes are one-shot fixtures, not commands to rerun against an existing database. `runtime-bootstrap.php` rejects databases other than `migration_acceptance` at `127.0.0.1:13389`. Recreate only disposable containers and restore the protected backup before another run.

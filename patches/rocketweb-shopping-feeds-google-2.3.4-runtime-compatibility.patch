@@ -1,0 +1,12 @@
+diff --git a/Model/Product/Mapper/Google/Simple/IdentifierExists.php b/Model/Product/Mapper/Google/Simple/IdentifierExists.php
+--- a/Model/Product/Mapper/Google/Simple/IdentifierExists.php
++++ b/Model/Product/Mapper/Google/Simple/IdentifierExists.php
+@@ -27,7 +27,7 @@
+     public function map(array $params = [])
+     {
+         $cacheMapValues = [];
+-        $identifiers = array_key_exists('param', $params) ? array_filter(explode(',', $params['param'])) : [];
++        $identifiers = isset($params['param']) ? array_filter(explode(',', $params['param'])) : [];
+         $identifiersToLoad = !empty($identifiers) ? $identifiers : ['brand', 'gtin', 'mpn'];
+ 
+         foreach ($this->getAdapter()->getFeed()->getColumnsMap() as $map) {

@@ -1,0 +1,36 @@
+{
+  "package": "rocketweb/module-shopping-feeds",
+  "version": "2.3.4",
+  "patch": "rocketweb-shopping-feeds-2.3.4-runtime-compatibility.patch",
+  "patch_sha256": "ad291f9470cdd263834880c9e16abf173c7f82db49fb0d9a0b073d628c77083a",
+  "files": {
+    "Console/Command/GenerateCommand.php": {
+      "original_sha256": "1128aef9ed30d1b63351a8ecaff9789d332d1dc13d4e20c8775ed2e03f4b3f66",
+      "patched_sha256": "b2974926f140c95e34adc2e28f2209590e0c0373d5d7b9eb991f0886afde7f20"
+    },
+    "Console/Command/ScheduleCommand.php": {
+      "original_sha256": "8d0b09c76267b2067aa6cb8cf39dc5a9edf36a7ae3d5fcb3de18efe600e9645c",
+      "patched_sha256": "9c6d89be2942843ca91268fd6ae6554f003d7eaf9ec8264e7c6c92a2afb7256c"
+    },
+    "Model/Product/Mapper/Generic/Configurable/Associated/Url.php": {
+      "original_sha256": "7ba7ce1c1855f261ade34b2c9bd9d7427a7c17844519a4ed1eec6d05e8237c17",
+      "patched_sha256": "77439b58d80bc93540d5f1d42132da9a1e0f7fbaf1d2bdfa378805914aca381b"
+    },
+    "Model/Product/Mapper/Generic/Grouped/Associated/Url.php": {
+      "original_sha256": "a349bb5fdffeac574426a2c167135d75246cbe8ed80529fe57badce49f36ce06",
+      "patched_sha256": "a1a8263bb0bd6b41f937b5befacbcd04986a24d88452c8f292adf71443dfa6d0"
+    },
+    "Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php": {
+      "original_sha256": "176ed3b36e9559d99e84b5f6fa6a4e3cdd3ab73b0bb461c456a4e7ebbce529ad",
+      "patched_sha256": "219f082fff618e4e3be5e1142a6b44069498b9da673bcd32c91f45d11b84abb3"
+    },
+    "Model/Product/Mapper/Generic/Simple/Shipping.php": {
+      "original_sha256": "5a6a1da520032aae69e662edeaf778499a6d3b3651fc911550ecc04ec94ab6a6",
+      "patched_sha256": "32ef0a82b15ef230f500773e308bc477286754619ed7d4625bb65e7a3e9d2f81"
+    },
+    "Model/Product/Mapper/Generic/Simple/Url.php": {
+      "original_sha256": "1e27e04fdbca918ddebde29ac470de4657b6e4159adde60d2134496f8d1478cf",
+      "patched_sha256": "e44107afda31f15d2a76e114499fa4d2df8e2644711bac5251f64c8724d3bcfe"
+    }
+  }
+}

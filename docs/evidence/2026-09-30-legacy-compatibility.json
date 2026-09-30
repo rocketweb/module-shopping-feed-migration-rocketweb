@@ -1,0 +1,408 @@
+{
+  "date": "2026-09-30",
+  "scope": "Opt-in legacy compatibility patch, synthetic local acceptance only",
+  "package": "rocketweb/module-shopping-feeds",
+  "version": "2.3.4",
+  "platform": {
+    "mage_os": "3.5.0",
+    "php": "8.4.24",
+    "symfony_console": "7.4.17",
+    "composer": "2.10.2",
+    "composer_patches": "2.0.0",
+    "vendor_patches": "12.2.0"
+  },
+  "compatibility_suite": {
+    "tests": 23,
+    "assertions": 55,
+    "original_command_failures_observed": true,
+    "original_image_failures_observed": true,
+    "original_shipping_failures_observed": true,
+    "strict_deprecations": true,
+    "original_url_failures_observed": true,
+    "original_google_identifier_failures_observed": true
+  },
+  "package_checks": {
+    "rocketweb/module-shopping-feeds": {
+      "patched_hashes_match": true,
+      "customized_file_rejected": true,
+      "wrong_version_rejected": true,
+      "reverse_patch_restores_original_hashes": true
+    },
+    "rocketweb/module-shopping-feeds-google": {
+      "patched_hashes_match": true,
+      "customized_file_rejected": true,
+      "wrong_version_rejected": true,
+      "reverse_patch_restores_original_hashes": true
+    }
+  },
+  "comparisons": {
+    "201": {
+      "legacy_rows": 8,
+      "destination_rows": 8,
+      "legacy_columns": 5,
+      "destination_columns": 5,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "added_columns": [],
+      "removed_columns": [],
+      "legacy_only_ids": [],
+      "destination_only_ids": [],
+      "shared_field_changes": [
+        {
+          "id": "migration-size-large",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            }
+          }
+        },
+        {
+          "id": "migration-size-small",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            }
+          }
+        }
+      ]
+    },
+    "202": {
+      "legacy_rows": 8,
+      "destination_rows": 8,
+      "legacy_columns": 5,
+      "destination_columns": 5,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "added_columns": [],
+      "removed_columns": [],
+      "legacy_only_ids": [],
+      "destination_only_ids": [],
+      "shared_field_changes": [
+        {
+          "id": "migration-size-large",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            }
+          }
+        },
+        {
+          "id": "migration-size-small",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            }
+          }
+        }
+      ]
+    },
+    "203": {
+      "legacy_rows": 7,
+      "destination_rows": 5,
+      "legacy_columns": 7,
+      "destination_columns": 7,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "added_columns": [],
+      "removed_columns": [],
+      "legacy_only_ids": [
+        "7",
+        "8"
+      ],
+      "destination_only_ids": [],
+      "shared_field_changes": []
+    },
+    "204": {
+      "legacy_rows": 7,
+      "destination_rows": 7,
+      "legacy_columns": 17,
+      "destination_columns": 17,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "added_columns": [],
+      "removed_columns": [],
+      "legacy_only_ids": [],
+      "destination_only_ids": [],
+      "shared_field_changes": [
+        {
+          "id": "2",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-configurable.html#137=5",
+              "destination": "http://127.0.0.1:18889/migration-configurable.html#137=5"
+            }
+          }
+        },
+        {
+          "id": "3",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-configurable.html#137=4",
+              "destination": "http://127.0.0.1:18889/migration-configurable.html#137=4"
+            }
+          }
+        },
+        {
+          "id": "4",
+          "fields": {
+            "link": {
+              "legacy": "http://127.0.0.1/migration-configurable.html",
+              "destination": "http://127.0.0.1:18889/migration-configurable.html"
+            }
+          }
+        },
+        {
+          "id": "5",
+          "fields": {
+            "link": {
+              "legacy": "http://127.0.0.1/migration-component-a.html",
+              "destination": "http://127.0.0.1:18889/migration-component-a.html"
+            }
+          }
+        },
+        {
+          "id": "6",
+          "fields": {
+            "link": {
+              "legacy": "http://127.0.0.1/migration-component-b.html",
+              "destination": "http://127.0.0.1:18889/migration-component-b.html"
+            }
+          }
+        },
+        {
+          "id": "7",
+          "fields": {
+            "link": {
+              "legacy": "http://127.0.0.1/migration-grouped.html",
+              "destination": "http://127.0.0.1:18889/migration-grouped.html"
+            }
+          }
+        },
+        {
+          "id": "8",
+          "fields": {
+            "link": {
+              "legacy": "http://127.0.0.1/migration-bundle.html",
+              "destination": "http://127.0.0.1:18889/migration-bundle.html"
+            }
+          }
+        }
+      ]
+    },
+    "205": {
+      "legacy_rows": 7,
+      "destination_rows": 7,
+      "legacy_columns": 21,
+      "destination_columns": 29,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "added_columns": [
+        "age_group",
+        "color",
+        "gender",
+        "item_group_title",
+        "material",
+        "pattern",
+        "promotion_id",
+        "size",
+        "variant_option"
+      ],
+      "removed_columns": [
+        "promotions_id"
+      ],
+      "legacy_only_ids": [],
+      "destination_only_ids": [],
+      "shared_field_changes": [
+        {
+          "id": "2",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            },
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-configurable.html?utm_source=google_shopping#137=5",
+              "destination": "http://127.0.0.1:18889/migration-configurable.html?___store=migration_second&utm_source=google_shopping#137=5"
+            }
+          }
+        },
+        {
+          "id": "3",
+          "fields": {
+            "availability": {
+              "legacy": "out_of_stock",
+              "destination": "in_stock"
+            },
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-configurable.html?utm_source=google_shopping#137=4",
+              "destination": "http://127.0.0.1:18889/migration-configurable.html?___store=migration_second&utm_source=google_shopping#137=4"
+            }
+          }
+        },
+        {
+          "id": "4",
+          "fields": {
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-configurable.html?utm_source=google_shopping",
+              "destination": "http://127.0.0.1:18889/migration-configurable.html?utm_source=google_shopping"
+            }
+          }
+        },
+        {
+          "id": "5",
+          "fields": {
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-component-a.html?utm_source=google_shopping",
+              "destination": "http://127.0.0.1:18889/migration-component-a.html?utm_source=google_shopping"
+            }
+          }
+        },
+        {
+          "id": "6",
+          "fields": {
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-component-b.html?utm_source=google_shopping",
+              "destination": "http://127.0.0.1:18889/migration-component-b.html?utm_source=google_shopping"
+            }
+          }
+        },
+        {
+          "id": "7",
+          "fields": {
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-grouped.html?utm_source=google_shopping",
+              "destination": "http://127.0.0.1:18889/migration-grouped.html?utm_source=google_shopping"
+            }
+          }
+        },
+        {
+          "id": "8",
+          "fields": {
+            "identifier_exists": {
+              "legacy": "FALSE",
+              "destination": ""
+            },
+            "link": {
+              "legacy": "http://127.0.0.1/migration-bundle.html?utm_source=google_shopping",
+              "destination": "http://127.0.0.1:18889/migration-bundle.html?utm_source=google_shopping"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "patches": {
+    "rocketweb/module-shopping-feeds": {
+      "sha256": "ad291f9470cdd263834880c9e16abf173c7f82db49fb0d9a0b073d628c77083a",
+      "file_count": 7
+    },
+    "rocketweb/module-shopping-feeds-google": {
+      "sha256": "befab78ccfeedd3e20a3371ddf71e1ee2a4ae718e0e22a201221bc29b82ffe35",
+      "file_count": 1
+    }
+  },
+  "importer_suite": {
+    "tests": 36,
+    "assertions": 92,
+    "null_parameter_tests_failed_before_fix": true
+  },
+  "normalized_imports": {
+    "208": {
+      "target_id": 15,
+      "normalization": {
+        "setting": "columns_product_columns",
+        "action": "Convert 14 null column parameter(s) to empty strings for destination compatibility."
+      },
+      "source_preserved": true,
+      "native_cli_exit": 0,
+      "native_cli_product_rows": 3,
+      "still_disabled": true
+    },
+    "209": {
+      "target_id": 16,
+      "normalization": {
+        "setting": "columns_product_columns",
+        "action": "Convert 12 null column parameter(s) to empty strings for destination compatibility."
+      },
+      "source_preserved": true,
+      "native_cli_exit": 0,
+      "native_cli_product_rows": 3,
+      "still_disabled": true
+    }
+  },
+  "planner_sha256": "890879b9a198f3f2358fb7c08e4cda969c552f0c5f3a7c44a5fda6acefd006eb",
+  "native_legacy_cli": {
+    "generic_products": 3,
+    "google_products": 3,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "schedule_help_exit": 0
+  },
+  "restore": {
+    "tables": {
+      "rw_feed_migration_receipt": 16,
+      "rw_shoppingfeeds_feed": 16,
+      "rw_shoppingfeeds_feed_config": 146,
+      "rw_shoppingfeeds_feed_upload": 2,
+      "mageos_shopping_feed_feed": 14,
+      "mageos_shopping_feed_feed_config": 883,
+      "mageos_shopping_feed_feed_upload": 2,
+      "catalog_product_entity": 8,
+      "catalog_product_entity_varchar": 53,
+      "catalog_product_website": 9,
+      "catalog_category_entity": 3,
+      "store": 4,
+      "store_website": 3,
+      "store_group": 3,
+      "inventory_source": 2,
+      "inventory_source_item": 6,
+      "inventory_stock": 2,
+      "inventory_source_stock_link": 2,
+      "inventory_stock_sales_channel": 2
+    },
+    "decrypted_receipts": 16,
+    "restored_files": 502
+  },
+  "magento_validation": {
+    "setup_upgrade_exit": 0,
+    "di_compile_exit": 0
+  }
+}

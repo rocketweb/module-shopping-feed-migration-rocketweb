@@ -1,0 +1,20 @@
+{
+  "patches": {
+    "rocketweb/module-shopping-feeds": [
+      {
+        "description": "Rocket Web 2.3.4 runtime compatibility for migration acceptance",
+        "url": "patches/rocketweb-shopping-feeds-2.3.4-runtime-compatibility.patch",
+        "sha256": "ad291f9470cdd263834880c9e16abf173c7f82db49fb0d9a0b073d628c77083a",
+        "depth": 1
+      }
+    ],
+    "rocketweb/module-shopping-feeds-google": [
+      {
+        "description": "Rocket Web 2.3.4 runtime compatibility for migration acceptance",
+        "url": "patches/rocketweb-shopping-feeds-google-2.3.4-runtime-compatibility.patch",
+        "sha256": "befab78ccfeedd3e20a3371ddf71e1ee2a4ae718e0e22a201221bc29b82ffe35",
+        "depth": 1
+      }
+    ]
+  }
+}

@@ -29,6 +29,26 @@ class Planner
                 throw new \DomainException('Unsupported configuration path: ' . $path);
             }
         }
+        $changes = [];
+        foreach (['columns_product_columns', 'filters_map_replace_empty_columns'] as $path) {
+            if (!is_array($config[$path] ?? null)) {
+                continue;
+            }
+            $normalized = 0;
+            foreach ($config[$path] as $key => $column) {
+                if (is_array($column) && array_key_exists('param', $column) && $column['param'] === null) {
+                    // Legacy XML emits null for empty parameters; PHP string mappers require an empty string.
+                    $config[$path][$key]['param'] = '';
+                    $normalized++;
+                }
+            }
+            if ($normalized > 0) {
+                $changes[] = ['setting' => $path, 'action' => sprintf(
+                    'Convert %d null column parameter(s) to empty strings for destination compatibility.',
+                    $normalized
+                )];
+            }
+        }
         if (!is_array($config['columns_product_columns'] ?? null)) {
             throw new \DomainException('The legacy column map must be an array. Repair it before importing.');
         }
@@ -52,7 +72,6 @@ class Planner
                 throw new \DomainException('An upload password cannot be decrypted on this installation. Re-enter it in the legacy module.');
             }
         }
-        $changes = [];
         $changes[] = ['setting' => 'status', 'action' => 'Import disabled; hold schedules, uploads and microdata until reviewed.'];
         $changes[] = ['setting' => 'general_feed_dir', 'action' => 'Use an isolated directory under pub/media/mageos-shopping-feed. Existing fetch URLs require a separately reviewed web-server mapping or destination update.'];
         $config['general_feed_dir'] = 'pub/media/mageos-shopping-feed/rocketweb-' . (int)$source['feed']['id'];

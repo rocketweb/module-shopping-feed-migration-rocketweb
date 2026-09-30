@@ -69,6 +69,46 @@ class PlannerTest extends TestCase
         $this->expectExceptionMessage('filename template');
         $this->planner()->build($source);
     }
+
+    /** @dataProvider columnMapPaths */
+    public function testNullColumnParametersNormalizeWithoutChangingOtherValuesOrSource(string $path): void
+    {
+        $columns = [
+            ['column' => 'null', 'attribute' => 'sku', 'param' => null],
+            ['column' => 'missing', 'attribute' => 'sku'],
+            ['column' => 'empty', 'attribute' => 'sku', 'param' => ''],
+            ['column' => 'zero', 'attribute' => 'sku', 'param' => 0],
+            ['column' => 'string-zero', 'attribute' => 'sku', 'param' => '0'],
+            ['column' => 'false', 'attribute' => 'sku', 'param' => false],
+            ['column' => 'value', 'attribute' => 'sku', 'param' => '?utm=test'],
+        ];
+        $source = self::source();
+        $source['config'][] = ['path' => $path, 'value' => json_encode($columns)];
+        $planner = $this->planner();
+        $plan = $planner->build($source);
+        $columns[0]['param'] = '';
+        self::assertSame($columns, json_decode($plan['config'][$path], true));
+        self::assertSame($source, $plan['source']);
+        self::assertContains($path, array_column($planner->report($plan)['changes'], 'setting'));
+    }
+
+    public static function columnMapPaths(): array
+    {
+        return [['columns_product_columns'], ['filters_map_replace_empty_columns']];
+    }
+
+    public function testInheritedNullColumnParameterIsNormalized(): void
+    {
+        $legacy = self::definition();
+        $legacy['default_feed_config']['columns']['product_columns'][0]['param'] = null;
+        $definitions = $this->createMock(Definitions::class);
+        $definitions->method('get')->willReturn([$legacy, self::definition()]);
+        $source = self::source();
+        $source['uploads'] = [];
+        $planner = new Planner($definitions, new ConfigCodec(), $this->createMock(EncryptorInterface::class));
+        $columns = json_decode($planner->build($source)['config']['columns_product_columns'], true);
+        self::assertSame('', $columns[0]['param']);
+    }
     /** @dataProvider invalidFilenames */
     public function testRejectsFilenamesTheDestinationCannotGenerate(string $path, string $value): void
     {

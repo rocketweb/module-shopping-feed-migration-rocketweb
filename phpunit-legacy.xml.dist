@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<phpunit bootstrap="Test/Compatibility/bootstrap.php" colors="true" cacheResult="false" convertDeprecationsToExceptions="true">
+    <testsuites><testsuite name="legacy-compatibility"><directory>Test/Compatibility</directory></testsuite></testsuites>
+</phpunit>

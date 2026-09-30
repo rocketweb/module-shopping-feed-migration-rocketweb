@@ -90,7 +90,7 @@ class Planner
                 ['scope' => $row['scope'], 'scope_id' => $row['scope_id'], 'path' => $row['path']], $source['system']),
             'changes' => $plan['changes'], 'notes' => [
                 'Scoped system settings are preserved in the encrypted receipt for manual review; shared configuration is not overwritten.',
-                'Destination formatting and validation can change generated output. Compare column order, product values and promotion fields before activation.',
+                'Destination generation can change row counts, stock status, column order, product values and promotion fields. Compare the actual files before activation.',
                 'Custom PHP plugins and observers require a separate compatibility review.',
                 'Import copies configuration only. It does not generate files, upload, alter old feeds, or switch fetch URLs.'
             ]];

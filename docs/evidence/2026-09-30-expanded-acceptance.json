@@ -1,0 +1,206 @@
+{
+  "date": "2026-09-30",
+  "scope": "Synthetic disposable acceptance; no recipient or production acceptance",
+  "importer_commit": "7c390cf",
+  "destination_version": "1.1.0",
+  "destination_commit": "4db58bb009f12cb84ab2fee2c2bac20f91493481",
+  "composer": {
+    "version": "2.10.2",
+    "repository_mode": "Local path repositories plus unaltered original lock metadata; network disabled",
+    "initial_installs": 2,
+    "unrelated_updates": 0,
+    "retained_receipts": 7,
+    "receipts_byte_identical_after_removal_and_reinstall": true
+  },
+  "catalog": {
+    "category_id": 3,
+    "store_id": 2,
+    "product_count": 8
+  },
+  "feeds": {
+    "201": {
+      "legacy_error": null,
+      "legacy_count": 8,
+      "target_count": 8,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "destination_column_count": 5,
+      "legacy_only_rows": [
+        {
+          "availability": "out_of_stock",
+          "id": "migration-size-large",
+          "price": "19.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Large"
+        },
+        {
+          "availability": "out_of_stock",
+          "id": "migration-size-small",
+          "price": "24.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Small"
+        }
+      ],
+      "destination_only_rows": [
+        {
+          "availability": "in_stock",
+          "id": "migration-size-large",
+          "price": "19.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Large"
+        },
+        {
+          "availability": "in_stock",
+          "id": "migration-size-small",
+          "price": "24.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Small"
+        }
+      ]
+    },
+    "202": {
+      "legacy_error": null,
+      "legacy_count": 8,
+      "target_count": 8,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "destination_column_count": 5,
+      "legacy_only_rows": [
+        {
+          "availability": "out_of_stock",
+          "id": "migration-size-large",
+          "price": "19.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Large"
+        },
+        {
+          "availability": "out_of_stock",
+          "id": "migration-size-small",
+          "price": "24.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Small"
+        }
+      ],
+      "destination_only_rows": [
+        {
+          "availability": "in_stock",
+          "id": "migration-size-large",
+          "price": "19.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Large"
+        },
+        {
+          "availability": "in_stock",
+          "id": "migration-size-small",
+          "price": "24.00 USD",
+          "product_type": "Clothing > Shirts",
+          "title": "Migration Size Small"
+        }
+      ]
+    },
+    "203": {
+      "legacy_error": null,
+      "legacy_count": 7,
+      "target_count": 5,
+      "row_values_equal": false,
+      "bytes_equal": false,
+      "destination_column_count": 7,
+      "legacy_only_rows": [
+        {
+          "availability": "in_stock",
+          "id": "7",
+          "price": "29.00 USD",
+          "quantity": "25",
+          "sale_price": "",
+          "sale_price_effective_date": "",
+          "store_code": "default"
+        },
+        {
+          "availability": "in_stock",
+          "id": "8",
+          "price": "12.00 USD",
+          "quantity": "25",
+          "sale_price": "",
+          "sale_price_effective_date": "",
+          "store_code": "default"
+        }
+      ],
+      "destination_only_rows": []
+    },
+    "204": {
+      "legacy_error": "Error: Call to a member function getConfig() on null",
+      "legacy_count": null,
+      "target_count": 7,
+      "row_values_equal": null,
+      "bytes_equal": null,
+      "destination_column_count": 17
+    },
+    "205": {
+      "legacy_error": "Error: Call to a member function getConfig() on null",
+      "legacy_count": null,
+      "target_count": 7,
+      "row_values_equal": null,
+      "bytes_equal": null,
+      "destination_column_count": 29
+    }
+  },
+  "website_inventory": {
+    "website_id": 2,
+    "store_id": 3,
+    "stock_id": 2,
+    "legacy_rows": [
+      {
+        "availability": "in_stock",
+        "id": "1",
+        "price": "29.95 USD",
+        "quantity": "9",
+        "sale_price": "",
+        "sale_price_effective_date": "",
+        "store_code": "migration_warehouse"
+      }
+    ],
+    "destination_rows": [
+      {
+        "availability": "in_stock",
+        "id": "1",
+        "price": "29.95 USD",
+        "quantity": "9",
+        "sale_price": "",
+        "sale_price_effective_date": "",
+        "store_code": "STORE-207"
+      }
+    ],
+    "note": "Synthetic categories_inventory_source_map is preserved and honored by the destination; legacy ignores this destination setting."
+  },
+  "sftp": {
+    "source_id": 206,
+    "products": 3,
+    "generated_sha256": "73c23ae0ee8789022305d901ecd20c88a0985f1b34b77453e748ceafd0eab860",
+    "uploaded_sha256": "73c23ae0ee8789022305d901ecd20c88a0985f1b34b77453e748ceafd0eab860"
+  },
+  "expanded_restore": {
+    "tables": {
+      "rw_feed_migration_receipt": 14,
+      "rw_shoppingfeeds_feed": 14,
+      "rw_shoppingfeeds_feed_config": 126,
+      "rw_shoppingfeeds_feed_upload": 2,
+      "mageos_shopping_feed_feed": 12,
+      "mageos_shopping_feed_feed_config": 757,
+      "mageos_shopping_feed_feed_upload": 2,
+      "catalog_product_entity": 8,
+      "catalog_product_entity_varchar": 53,
+      "catalog_product_website": 9,
+      "catalog_category_entity": 3,
+      "store": 4,
+      "store_website": 3,
+      "store_group": 3,
+      "inventory_source": 2,
+      "inventory_source_item": 6,
+      "inventory_stock": 2,
+      "inventory_source_stock_link": 2,
+      "inventory_stock_sales_channel": 2
+    },
+    "decrypted_receipts": 14,
+    "restored_files": 31
+  }
+}

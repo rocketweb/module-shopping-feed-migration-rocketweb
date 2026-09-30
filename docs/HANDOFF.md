@@ -24,11 +24,23 @@ Both fixes have regression tests observed failing before the corrections. Curren
 - A database restore and configuration/generated-file restore passed; encrypted receipts remained readable.
 - Syntax/schema validator: **22 PHP/template files and 7 XML documents**. Composer metadata validation passed.
 
+After Matt's **commit and continue** instruction, the implementation was committed locally as `7c390cf` and acceptance continued:
+
+- Composer installed the importer and destination v1.1.0 into `vendor/`, using real locked platform metadata and local path repositories. Two installs, no unrelated updates. Upgrade and DI compilation passed.
+- Normal Composer remove/reinstall with schema upgrades preserved seven encrypted receipts byte-for-byte. Import/rollback and generation also passed from installed packages.
+- Eight-product comparisons exercised configurable/grouped/bundle relationships, custom/full default maps, category mappings, a second store view, and a second website with independent inventory.
+- The expanded comparison found material destination changes: variant stock status and Local Inventory parent-row omission. Full default legacy generation failed in `AdditionalImageLink`; imported defaults generated successfully. Do not claim output equivalence.
+- Actual SFTP activation/upload passed on loopback with matching file hashes.
+- Expanded database restore matched 19 tables and decrypted all fourteen receipts; 31 restored files matched. Resume from protected `after-expanded-acceptance.sql` and `after-expanded-files.tar.gz`.
+- Importer suite still passed: **33 tests, 85 assertions**. Preview guidance now calls out row counts and stock status.
+
+Credential-free results are in `docs/evidence/2026-09-30-expanded-acceptance.json`.
+
 See [the acceptance record](ACCEPTANCE-2026-09-30.md) for exact versions, evidence paths, fixture scope, and limits.
 
 ## Important compatibility finding
 
-Unmodified Rocket Web 2.3.4 does not load on the tested Symfony 7.4 stack: both legacy CLI `execute()` methods lack the required `int` return type. Only the disposable legacy copies were adjusted so acceptance could continue. This module does not distribute that adjustment. Approve a real compatibility path before claiming production readiness.
+Unmodified Rocket Web 2.3.4 does not load on the tested Symfony 7.4 stack: both legacy CLI `execute()` methods lack the required `int` return type. Only the disposable legacy copies were adjusted so acceptance could continue. Full default generation also fails because legacy `AdditionalImageLink` accesses an undefined `$feed`; that mapper was not patched. This module distributes neither fix. Approve a real compatibility path before claiming production readiness.
 
 ## Separate main-module change
 
@@ -40,12 +52,12 @@ The primary checkout `/Users/matt/code/module-shopping-feed` was not edited by t
 
 ## Next work
 
-1. Review the two fixes and the legacy compatibility decision.
-2. Test Composer installation/removal and the exact supported platform. The runtime tests used copied `app/code` modules, not Composer installation.
-3. Expand synthetic acceptance to complex products, full/default maps, multiple store scopes, category and inventory-source mappings, and SFTP. Run representative store acceptance before cutover.
+1. Review the importer fixes and resolve the two legacy compatibility defects. Review the variant-stock and Local Inventory row-count changes before accepting output.
+2. Repeat installation/removal on the intended platform, including Magento Open Source if supported. Mage-OS 3.5 with local Composer path repositories passed; published package discovery remains untested.
+3. Run representative store and external-recipient acceptance before cutover. Synthetic complex-product, scope, mapping, and SFTP checks are documented, with explicit limits.
 4. Review/integrate the separate main-module notice. Publish its installation target before release; only then add Composer `suggest`.
 5. Local commits are authorized. Obtain explicit authorization before pushing or publishing a tested release. Verify package registration/discovery independently.
 
-The disposable runtime is `/private/tmp/rocketweb-migration-acceptance-20260930`. The final copied destination is v1.1.0. Test services are stopped; the protected SQL/file backups and local evidence remain. The tmpfs database is not durable. Read the acceptance record before restarting or rerunning one-shot seed scripts.
+The disposable runtime is `/private/tmp/rocketweb-migration-acceptance-20260930`. The final Composer-installed destination is v1.1.0. Test services are stopped; the protected SQL/file backups and local evidence remain. The tmpfs database is not durable. Read the acceptance record before restarting or rerunning one-shot seed scripts.
 
 Known boundaries remain: shared settings need manual review; legacy fetch URLs require a recipient change or a narrow web-server mapping; custom PHP is not translated. Keep legacy modules enabled during setup to protect their declarative-schema tables. Cutover disables individual source feeds.

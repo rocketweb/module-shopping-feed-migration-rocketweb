@@ -1,0 +1,29 @@
+{
+    "name": "rocketweb/module-shopping-feed-migration-rocketweb",
+    "description": "Optional, explicit migration of Rocket Web feed configuration to Mage-OS Shopping Feed.",
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Matt MacDougall",
+            "email": "matt.macdougall@rocketweb.com"
+        }
+    ],
+    "require": {
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "mage-os/module-shopping-feed": "^1.1",
+        "magento/framework": "^103.0.6-p15"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "RocketWeb\\ShoppingFeedMigration\\": ""
+        }
+    },
+    "support": {
+        "source": "https://github.com/rocketweb/module-shopping-feed-migration-rocketweb",
+        "issues": "https://github.com/rocketweb/module-shopping-feed-migration-rocketweb/issues"
+    }
+}

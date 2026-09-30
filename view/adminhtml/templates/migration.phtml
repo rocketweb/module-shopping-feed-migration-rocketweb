@@ -1,0 +1,72 @@
+<?php
+/** @var \RocketWeb\ShoppingFeedMigration\Block\Adminhtml\Migration $block */
+$report = $block->report();
+$operation = $report['action'] ?? 'import';
+?>
+<p><?= $block->escapeHtml(__('Copy your existing feed settings, compare the output, then activate the replacement. Your original feed remains available.')) ?></p>
+<p><?= $block->escapeHtml(__('Before installation or migration, back up your database and generated files. Keep the legacy module enabled through setup:upgrade. Disable individual feeds only when ready to switch.')) ?></p>
+<table class="data-grid">
+    <thead><tr><th><?= $block->escapeHtml(__('Legacy feed')) ?></th><th><?= $block->escapeHtml(__('Type')) ?></th><th><?= $block->escapeHtml(__('Store')) ?></th><th><?= $block->escapeHtml(__('Action')) ?></th></tr></thead>
+    <tbody>
+    <?php foreach ($block->candidates() as $feed) : ?>
+    <tr><td><?= $block->escapeHtml($feed['name']) ?></td><td><?= $block->escapeHtml($feed['type']) ?></td><td><?= (int)$feed['store_id'] ?></td><td><a href="<?= $block->escapeUrl($block->getUrl('*/*/index', ['feed' => $feed['id']])) ?>"><?= $block->escapeHtml(__('Review import')) ?></a></td></tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php if ($report) : ?>
+<h2><?= $block->escapeHtml(__('Migration preview')) ?></h2>
+    <?php if (isset($report['error'])) : ?>
+<p class="message message-error"><?= $block->escapeHtml($report['error']) ?></p>
+    <?php elseif (isset($report['name'])) : ?>
+<p><strong><?= $block->escapeHtml($report['name']) ?></strong> (<?= $block->escapeHtml($report['type']) ?>), <?= $block->escapeHtml(__('store %1', $report['store_id'])) ?></p>
+<ul>
+    <li><?= $block->escapeHtml(__('%1 feed settings will be copied, including inherited defaults.', count($report['configuration_paths']))) ?></li>
+    <li><?= $block->escapeHtml(__('%1 schedules and %2 upload destinations will be held until activation.', $report['schedule_count'], $report['upload_count'])) ?></li>
+        <?php foreach ($report['changes'] as $change) :
+            ?><li><?= $block->escapeHtml($change['action']) ?></li><?php
+        endforeach; ?>
+        <?php foreach ($report['notes'] as $note) :
+            ?><li><?= $block->escapeHtml($note) ?></li><?php
+        endforeach; ?>
+</ul>
+        <?php if ($report['system_settings']) : ?>
+<p><?= $block->escapeHtml(__('Review these shared settings in the old configuration screen before switching:')) ?></p>
+<ul><?php foreach ($report['system_settings'] as $setting) :
+    ?><li><?= $block->escapeHtml($setting['path']) ?> (<?= $block->escapeHtml($setting['scope']) ?> <?= (int)$setting['scope_id'] ?>)</li><?php
+    endforeach; ?></ul>
+        <?php endif; ?>
+        <?php if ($report['receipt']) :
+            ?><p><?= $block->escapeHtml(__('This feed already has a migration receipt. Use its next-step actions below.')) ?></p><?php
+        endif; ?>
+    <?php else : ?>
+<p><?= $block->escapeHtml(__('Imported feed %1, from legacy feed %2.', $report['target_id'], $report['source_id'])) ?></p>
+<p><?= $block->escapeHtml($report['effect']) ?></p>
+    <?php endif; ?>
+    <?php if (isset($report['token']) && empty($report['receipt'])) : ?>
+<form method="post" action="<?= $block->escapeUrl($block->getUrl('*/*/apply')) ?>">
+    <input type="hidden" name="form_key" value="<?= $block->escapeHtmlAttr($block->formKey()) ?>"/>
+    <input type="hidden" name="feed" value="<?= (int)$report['source_id'] ?>"/>
+    <input type="hidden" name="token" value="<?= $block->escapeHtmlAttr($report['token']) ?>"/>
+    <input type="hidden" name="operation" value="<?= $block->escapeHtmlAttr($operation) ?>"/>
+        <?php if ($operation === 'import') : ?>
+    <label for="backup_reference"><?= $block->escapeHtml(__('Completed backup reference (no credentials)')) ?></label>
+    <input id="backup_reference" name="backup_reference" type="text" maxlength="255" required/>
+        <?php endif; ?>
+    <p><label><input type="checkbox" required/> <?= $block->escapeHtml(__('I reviewed the effects shown above. For activation, I have verified the generated output and arranged the feed URL cutover.')) ?></label></p>
+    <button type="submit" class="action-primary"><?= $block->escapeHtml(['import' => __('Import configuration'), 'activate' => __('Activate imported feed'), 'rollback' => __('Remove unchanged import')][$operation]) ?></button>
+</form>
+    <?php endif; ?>
+<?php endif; ?>
+<h2><?= $block->escapeHtml(__('Migration receipts')) ?></h2>
+<table class="data-grid">
+<thead><tr><th><?= $block->escapeHtml(__('Legacy ID')) ?></th><th><?= $block->escapeHtml(__('Imported ID')) ?></th><th><?= $block->escapeHtml(__('State')) ?></th><th><?= $block->escapeHtml(__('Review next step')) ?></th></tr></thead>
+<tbody>
+<?php foreach ($block->receipts() as $receipt) : ?>
+<tr><td><?= (int)$receipt['source_id'] ?></td><td><?= (int)$receipt['target_id'] ?></td><td><?= $block->escapeHtml($receipt['state']) ?></td><td>
+    <?php if ($receipt['state'] === 'imported') : ?>
+<a href="<?= $block->escapeUrl($block->getUrl('*/*/index', ['feed' => $receipt['source_id'], 'operation' => 'activate'])) ?>"><?= $block->escapeHtml(__('Review activation')) ?></a> |
+<a href="<?= $block->escapeUrl($block->getUrl('*/*/index', ['feed' => $receipt['source_id'], 'operation' => 'rollback'])) ?>"><?= $block->escapeHtml(__('Review rollback')) ?></a>
+    <?php endif; ?>
+</td></tr>
+<?php endforeach; ?>
+</tbody></table>

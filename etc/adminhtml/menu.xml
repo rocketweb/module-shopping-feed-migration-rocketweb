@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu><add id="RocketWeb_ShoppingFeedMigration::migration" title="Import Rocket Web Feeds" module="RocketWeb_ShoppingFeedMigration" sortOrder="90" parent="MageOS_ShoppingFeed::mageos_shopping_feed" action="rocketweb_feed_migration/manage/index" resource="RocketWeb_ShoppingFeedMigration::migration"/></menu>
+</config>

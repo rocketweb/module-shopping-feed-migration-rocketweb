@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="rw_feed_migration_receipt" resource="default" engine="innodb" comment="Rocket Web feed migration receipts">
+        <column xsi:type="int" name="source_id" unsigned="true" nullable="false" comment="Legacy feed ID"/>
+        <column xsi:type="int" name="target_id" unsigned="true" nullable="false" comment="Imported feed ID"/>
+        <column xsi:type="varchar" name="state" length="24" nullable="false" comment="Migration state"/>
+        <column xsi:type="varchar" name="target_hash" length="64" nullable="false" comment="Imported snapshot digest"/>
+        <column xsi:type="mediumtext" name="payload" nullable="false" comment="Encrypted source snapshot and held settings"/>
+        <column xsi:type="varchar" name="backup_reference" length="255" nullable="false" comment="Operator backup reference"/>
+        <column xsi:type="timestamp" name="created_at" default="CURRENT_TIMESTAMP" nullable="false" on_update="false" comment="Imported at"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY"><column name="source_id"/></constraint>
+        <constraint xsi:type="unique" referenceId="RW_FEED_MIGRATION_TARGET"><column name="target_id"/></constraint>
+    </table>
+</schema>

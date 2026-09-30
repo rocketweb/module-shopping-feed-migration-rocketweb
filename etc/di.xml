@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="RocketWebLegacyFeedReader" type="MageOS\ShoppingFeed\Model\FeedTypes\Config\Reader">
+        <arguments>
+            <argument name="fileName" xsi:type="string">shoppingfeeds.xml</argument>
+            <argument name="schemaLocator" xsi:type="object">RocketWeb\ShoppingFeedMigration\Model\LegacySchemaLocator</argument>
+        </arguments>
+    </virtualType>
+    <type name="RocketWeb\ShoppingFeedMigration\Model\Definitions"><arguments>
+        <argument name="legacyReader" xsi:type="object">RocketWebLegacyFeedReader</argument>
+    </arguments></type>
+    <type name="Magento\Framework\Console\CommandListInterface"><arguments><argument name="commands" xsi:type="array">
+        <item name="rocketweb_feed_migration" xsi:type="object">RocketWeb\ShoppingFeedMigration\Console\MigrateCommand</item>
+    </argument></arguments></type>
+</config>

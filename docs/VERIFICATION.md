@@ -28,6 +28,8 @@ The Admin regression checks also load the block against Magento's real parent cl
 
 The importer suite now includes inherited and saved null-column-parameter checks. Null parameters become empty strings in destination product/replacement maps; missing parameters, zero, false, configured values, and original source records are preserved. The preview discloses normalization.
 
+Both product and replacement maps reject malformed rows and unavailable directives before import. Empty replacement maps and supported static fallbacks remain valid. The database regression checks preview and apply rejection without writes. The [2026-10-01 continuation](ACCEPTANCE-2026-10-01.md) records 59 passing tests / 143 assertions and native CLI generation with static and registered-directive fallback values.
+
 The separate [legacy compatibility suite](LEGACY-COMPATIBILITY.md#validation-and-reversal) requires isolated base and Google add-on packages. It enables strict deprecation exceptions and tests actual legacy classes. It does not run as part of the importer suite or require patching installed legacy modules merely to test the importer.
 
 Run syntax, metadata, and schema checks separately:

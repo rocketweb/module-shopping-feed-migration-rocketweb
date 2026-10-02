@@ -12,7 +12,7 @@ This is an unreleased development implementation. Disposable Mage-OS 3.5 checks 
 - Creates a disabled destination feed with microdata off. Schedules and encrypted upload credentials are held in an encrypted database receipt until activation.
 - Keeps the original feed and database records intact.
 - Requires a current preview token and an operator-supplied backup reference before import. The reference records the operator's completed backup; the module does not create or verify that external backup.
-- Rejects repeated imports, unsupported settings/directives, unreadable upload credentials, and stale previews.
+- Rejects repeated imports, unsupported settings/directives, malformed product and replacement column maps, unreadable upload credentials, and stale previews. Both column maps are checked against the destination's registered directives.
 - Uses a transaction for each import, activation, and rollback, plus a migration lock and row locks.
 - Rolls back an unchanged import. It refuses automated rollback after edits or activation.
 

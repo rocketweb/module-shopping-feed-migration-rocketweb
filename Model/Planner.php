@@ -31,12 +31,31 @@ class Planner
         }
         $changes = [];
         foreach (['columns_product_columns', 'filters_map_replace_empty_columns'] as $path) {
-            if (!is_array($config[$path] ?? null)) {
+            $replacement = $path === 'filters_map_replace_empty_columns';
+            $columns = $config[$path] ?? null;
+            if ($replacement && ($columns === null || $columns === '')) {
+                // The legacy XML and editor both allow an unconfigured replacement map.
                 continue;
             }
+            if (!is_array($columns)) {
+                throw new \DomainException('The legacy column map must be an array: ' . $path);
+            }
             $normalized = 0;
-            foreach ($config[$path] as $key => $column) {
-                if (is_array($column) && array_key_exists('param', $column) && $column['param'] === null) {
+            foreach ($columns as $key => $column) {
+                if (!is_array($column) || !is_string($column['column'] ?? null) || trim($column['column']) === '') {
+                    throw new \DomainException('The legacy column map contains an invalid column: ' . $path);
+                }
+                $attribute = $column['attribute'] ?? '';
+                // Replacement rules may provide a static value without an attribute.
+                $static = $replacement && !empty($column['static']) && is_scalar($column['static'])
+                    && in_array($attribute, ['', 'directive_static_value'], true);
+                if (!$static && (!is_string($attribute) || $attribute === '')) {
+                    throw new \DomainException('The legacy column map contains an invalid attribute: ' . $path);
+                }
+                if (!$static && str_starts_with($attribute, 'directive_') && !isset($new['directives'][$attribute])) {
+                    throw new \DomainException('A configured column uses a directive unavailable in the destination: ' . $path);
+                }
+                if (array_key_exists('param', $column) && $column['param'] === null) {
                     // Legacy XML emits null for empty parameters; PHP string mappers require an empty string.
                     $config[$path][$key]['param'] = '';
                     $normalized++;
@@ -47,18 +66,6 @@ class Planner
                     'Convert %d null column parameter(s) to empty strings for destination compatibility.',
                     $normalized
                 )];
-            }
-        }
-        if (!is_array($config['columns_product_columns'] ?? null)) {
-            throw new \DomainException('The legacy column map must be an array. Repair it before importing.');
-        }
-        foreach ($config['columns_product_columns'] as $column) {
-            if (!is_array($column) || !is_string($column['attribute'] ?? null)) {
-                throw new \DomainException('The legacy column map contains an invalid column.');
-            }
-            $attribute = $column['attribute'] ?? '';
-            if (str_starts_with($attribute, 'directive_') && !isset($new['directives'][$attribute])) {
-                throw new \DomainException('A configured column uses a directive unavailable in the destination.');
             }
         }
         foreach ($source['uploads'] as $upload) {

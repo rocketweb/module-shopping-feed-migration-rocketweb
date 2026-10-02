@@ -136,6 +136,32 @@ class MigrationTest extends TestCase
         self::assertSame([], $this->repository->receipts());
         self::assertSame('0', (string)$this->db->fetchOne('SELECT COUNT(*) FROM ' . $this->repository->table('mageos_shopping_feed_feed')));
     }
+    public function testUnsupportedReplacementDirectiveBlocksPreviewAndApplyWithoutWrites(): void
+    {
+        $token = $this->migration->preview(7)['token'];
+        $this->db->insert($this->repository->table('rw_shoppingfeeds_feed_config'), [
+            'feed_id' => 7,
+            'path' => 'filters_map_replace_empty_columns',
+            'value' => '[{"column":"id","attribute":"directive_custom"}]',
+        ]);
+        $source = $this->repository->source(7);
+        foreach (['preview', 'import'] as $action) {
+            try {
+                if ($action === 'preview') {
+                    $this->migration->preview(7);
+                } else {
+                    $this->migration->import(7, $token, 'backup');
+                }
+                self::fail('Unsupported replacement directive passed ' . $action);
+            } catch (\DomainException $e) {
+                self::assertStringContainsString('directive unavailable', $e->getMessage());
+                self::assertStringContainsString('filters_map_replace_empty_columns', $e->getMessage());
+            }
+            self::assertSame($source, $this->repository->source(7));
+            self::assertSame([], $this->repository->receipts());
+            self::assertSame('0', (string)$this->db->fetchOne('SELECT COUNT(*) FROM ' . $this->repository->table('mageos_shopping_feed_feed')));
+        }
+    }
     public function testDuplicateImportIsBlocked(): void
     {
         $this->import();

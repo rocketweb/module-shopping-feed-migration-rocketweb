@@ -23,10 +23,12 @@ class PlannerTest extends TestCase
             'config' => [['path' => 'general_currency', 'value' => 'GBP']], 'schedules' => [],
             'uploads' => [['password' => 'cipher']], 'system' => []];
     }
-    private function planner(bool $canDecrypt = true): Planner
+    private function planner(bool $canDecrypt = true, array $directives = []): Planner
     {
         $definitions = $this->createMock(Definitions::class);
-        $definitions->method('get')->willReturn([self::definition(), self::definition()]);
+        $target = self::definition();
+        $target['directives'] = $directives;
+        $definitions->method('get')->willReturn([self::definition(), $target]);
         $encryptor = $this->createMock(EncryptorInterface::class);
         $encryptor->method('decrypt')->willReturn($canDecrypt ? 'test-only-password' : '');
         return new Planner($definitions, new ConfigCodec(), $encryptor);
@@ -55,12 +57,76 @@ class PlannerTest extends TestCase
         $this->expectExceptionMessage('cannot be decrypted');
         $this->planner(false)->build(self::source());
     }
-    public function testUnknownDirectivesBlockImport(): void
+    /** @dataProvider columnMapPaths */
+    public function testUnknownDirectivesBlockImport(string $path): void
     {
         $source = self::source();
-        $source['config'][] = ['path' => 'columns_product_columns', 'value' => '[{"attribute":"directive_custom"}]'];
+        $source['config'][] = ['path' => $path, 'value' => '[{"column":"id","attribute":"directive_custom"}]'];
         $this->expectExceptionMessage('directive unavailable');
         $this->planner()->build($source);
+    }
+
+    /** @dataProvider invalidColumnMaps */
+    public function testMalformedColumnMapsBlockImport(string $path, mixed $map): void
+    {
+        $source = self::source();
+        $source['config'][] = ['path' => $path, 'value' => serialize($map)];
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage($path);
+        $this->planner()->build($source);
+    }
+
+    public static function invalidColumnMaps(): array
+    {
+        $cases = [];
+        foreach (self::columnMapPaths() as [$path]) {
+            foreach (
+                [
+                    'scalar map' => 'invalid',
+                    'scalar row' => ['invalid'],
+                    'missing column' => [['attribute' => 'sku']],
+                    'empty column' => [['column' => '', 'attribute' => 'sku']],
+                    'missing attribute' => [['column' => 'id']],
+                    'array attribute' => [['column' => 'id', 'attribute' => ['sku']]],
+                ] as $name => $map
+            ) {
+                $cases[$path . ': ' . $name] = [$path, $map];
+            }
+        }
+        return $cases;
+    }
+
+    /** @dataProvider validReplacementMaps */
+    public function testSupportedReplacementRulesArePreserved(mixed $map): void
+    {
+        $source = self::source();
+        $source['config'][] = ['path' => 'filters_map_replace_empty_columns', 'value' => serialize($map)];
+        $plan = $this->planner()->build($source);
+        self::assertSame((new ConfigCodec())->encode($map), $plan['config']['filters_map_replace_empty_columns']);
+        self::assertSame($source, $plan['source']);
+    }
+
+    public static function validReplacementMaps(): array
+    {
+        return [
+            'empty XML default' => [null],
+            'empty saved value' => [''],
+            'empty list' => [[]],
+            'attribute fallback' => [[['column' => 'title', 'attribute' => 'name', 'order' => 2]]],
+            'static fallback without attribute' => [[['column' => 'brand', 'static' => 'Fixture brand']]],
+            'static fallback with empty attribute' => [[['column' => 'brand', 'attribute' => '', 'static' => 'Fixture brand']]],
+            'static fallback with directive' => [[['column' => 'brand', 'attribute' => 'directive_static_value', 'static' => 'Fixture brand']]],
+        ];
+    }
+
+    /** @dataProvider columnMapPaths */
+    public function testDestinationRegisteredDirectivesArePreserved(string $path): void
+    {
+        $map = [['column' => 'id', 'attribute' => 'directive_custom', 'param' => 'fixture']];
+        $source = self::source();
+        $source['config'][] = ['path' => $path, 'value' => json_encode($map)];
+        $plan = $this->planner(true, ['directive_custom' => []])->build($source);
+        self::assertSame($map, json_decode($plan['config'][$path], true));
     }
     public function testPathTraversalBlocksImport(): void
     {

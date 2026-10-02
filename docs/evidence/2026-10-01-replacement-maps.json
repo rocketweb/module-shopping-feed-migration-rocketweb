@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-01",
+  "scope": "Synthetic local replacement-map validation; no existing store or external recipient changed",
+  "platform": {
+    "mage_os": "3.5.0",
+    "php": "8.4.24",
+    "destination": "1.1.0"
+  },
+  "regression_before_fix": {
+    "tests": 35,
+    "assertions": 55,
+    "failures": 14,
+    "missing_rejection_failures": 10,
+    "missing_setting_diagnostic_failures": 4
+  },
+  "importer_suite": {
+    "phpunit": "9.6.37",
+    "tests": 59,
+    "assertions": 143,
+    "failures": 0,
+    "database": "feed_migration_test",
+    "table_prefix": "rw_migration_test_"
+  },
+  "checks": {
+    "php_template_files": 25,
+    "xml_documents": 7,
+    "composer_validate_strict": true,
+    "changed_php_psr12_errors": 0
+  },
+  "runtime": {
+    "source_id": 210,
+    "rejected": {
+      "unknown-directive": {
+        "exit_code": 1,
+        "source_preserved": true,
+        "no_target_or_receipt": true
+      },
+      "malformed-row": {
+        "exit_code": 1,
+        "source_preserved": true,
+        "no_target_or_receipt": true
+      }
+    },
+    "accepted": {
+      "target_id": 17,
+      "source_preserved": true,
+      "rules_preserved": true,
+      "native_cli_exit": 0,
+      "native_cli_rows": 3,
+      "static_fallback_rows": 3,
+      "directive_fallback_rows": 3,
+      "disabled": true,
+      "schedules": 0,
+      "uploads": 0
+    },
+    "planner_sha256": "1c232413c832cc82a72ad09a6d67fca11408d2d8900ce227d4ff230322e9e793"
+  },
+  "recovery": {
+    "backup": "after-compatibility-acceptance.sql",
+    "receipts": 16,
+    "includes_fixture_210": false
+  },
+  "limits": [
+    "Synthetic fixtures only",
+    "Store and recipient acceptance remain open",
+    "Other platforms and published package discovery unverified"
+  ]
+}

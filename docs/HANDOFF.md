@@ -44,6 +44,14 @@ Patched legacy full-default output now permits comparison: Generic generated sev
 
 See [the acceptance record](ACCEPTANCE-2026-09-30.md) for exact versions, evidence paths, fixture scope, and limits.
 
+## Completed on 2026-10-01
+
+Continued local validation found that `filters_map_replace_empty_columns` bypassed directive validation. The planner now validates both column maps, rejects malformed rows and unavailable directives, and names the affected setting. Valid static fallbacks, registered custom directives, empty replacement maps, and null-parameter normalization remain supported.
+
+Regression tests were observed failing against the previous planner. The full importer suite passes: **59 tests, 143 assertions**. Syntax/schema validation and focused PSR-12 checks pass. Native CLI preview rejected invalid replacement rules without writes; a fresh synthetic import generated three rows with the expected static and directive fallback values, remaining disabled with schedules/uploads held. See [the continuation record](ACCEPTANCE-2026-10-01.md) and its credential-free JSON evidence.
+
+Fixture 210 / target 17 was disposable and is not in the protected sixteen-receipt backup. Restore the September 30 backup before running `verify-replacement-maps.php` again. No existing import was rewritten. The same store, platform, recipient, and publication gates remain open.
+
 ## Important compatibility finding
 
 The original legacy packages still have the reproduced compatibility defects. Reviewable patches, checksums, a read-only preflight, Composer examples and regression tests are now included. They are opt-in and have only been applied to disposable copies. The original sibling source checkouts remain unchanged. Validate customizations, other platform versions, and actual store distributions before applying them elsewhere.
@@ -58,7 +66,7 @@ The primary checkout `/Users/matt/code/module-shopping-feed` was not edited by t
 
 ## Next work
 
-1. Review the importer normalization and opt-in legacy patches. Review stock, row-count, URL, and Google-column differences before accepting output. The local compatibility blockers are reproduced and fixed, but existing-store acceptance remains open.
+1. Review the importer normalization, column-map validation, and opt-in legacy patches. Review stock, row-count, URL, and Google-column differences before accepting output. The local compatibility blockers are reproduced and fixed, but existing-store acceptance remains open.
 2. Repeat installation/removal on the intended platform, including Magento Open Source if supported. Mage-OS 3.5 with local Composer path repositories passed; published package discovery remains untested.
 3. Run representative store and external-recipient acceptance before cutover. Synthetic complex-product, scope, mapping, and SFTP checks are documented, with explicit limits.
 4. Review/integrate the separate main-module notice. Publish its installation target before release; only then add Composer `suggest`.

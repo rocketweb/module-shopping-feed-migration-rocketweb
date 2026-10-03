@@ -20,3 +20,11 @@ The notice is implemented separately in `/private/tmp/shopping-feed-migration-di
 It adds a block, template, dismiss handler, feed-grid layout entry, and five focused tests. It checks registration without loading legacy classes, resolves prefixed table names, distinguishes remaining tables, and only links to the installed migration tool when the user has its ACL. Browser checks covered the installed/authorized, installed/unauthorized, module-absent/legacy-present, and dismiss states. Remaining-table and clean-install states are unit-tested. The consolidation validator permits only the exact discovery literals in these two PHP files; a negative probe verified it still rejects legacy PHP class references.
 
 The full main-module suite passed with the installed PHPUnit 12 runner: 651 tests, 1,766 assertions. Five focused tests also passed under PHPUnit 9: 27 assertions. `composer suggest` remains pending publication, as specified above. The installation link points to this repository's README and must be available before this notice is released.
+
+## Refreshed on 2026-10-03
+
+The same six-file discovery change is now prepared on the main module's 1.2.0 candidate `ca9030c0ad843fa8d1eea5c638071b2734b579a7`. It applied cleanly in `/private/tmp/shopping-feed-migration-discovery-20261003`, branch `feat/rocketweb-migration-discovery-20261003`, and is committed locally as `93bcbe68c593202462462506b8b6c5ff72675fb0`. The reviewable patch is `/private/tmp/shopping-feed-migration-discovery-20261003.patch`. The primary checkout remains untouched.
+
+On the Magento Open Source 2.4.8 framework, the full main-module suite passed **814 tests, 1,906 assertions**. Consolidation validation passed for 26 XML files and eight feed types. The installed candidate compiled with the importer and legacy modules. Native checks built the Admin ACL and detected the legacy module while the importer was disabled and Composer-removed. The earlier browser checks remain evidence for their September 30 baseline; they were not repeated for this candidate. See [the platform acceptance record](ACCEPTANCE-2026-10-03.md).
+
+This is still a separate local integration branch. The notice's installation target must be published before release, and Composer `suggest` remains deferred until then.

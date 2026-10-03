@@ -9,7 +9,10 @@ if (!is_file($magento . '/vendor/autoload.php')) {
 }
 require $magento . '/vendor/autoload.php';
 $root = dirname(__DIR__);
-require $root . '/registration.php';
+$registrar = new Magento\Framework\Component\ComponentRegistrar();
+if (!$registrar->getPath($registrar::MODULE, 'RocketWeb_ShoppingFeedMigration')) {
+    require $root . '/registration.php';
+}
 $resolver = new Magento\Framework\Config\Dom\UrnResolver();
 libxml_set_external_entity_loader([$resolver, 'registerEntityLoader']);
 $count = 0;

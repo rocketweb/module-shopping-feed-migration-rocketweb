@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-03",
+  "scope": "Separate disposable Magento Open Source migration acceptance; existing stores unchanged",
+  "platform": {
+    "magento": "2.4.8",
+    "framework": "103.0.8",
+    "php": "8.4.24",
+    "symfony_console": "6.4.47",
+    "mode": "production"
+  },
+  "importer_runtime_commit": "95691d21d4b175cf62d92fce846b0cd35a09fc5e",
+  "destination_candidate_commit": "93bcbe68c593202462462506b8b6c5ff72675fb0",
+  "destination_base_commit": "ca9030c0ad843fa8d1eea5c638071b2734b579a7",
+  "destination_path_version": "1.2.0",
+  "legacy_packages": {
+    "rocketweb/module-shopping-feeds-google-promotions": "2.3.4",
+    "rocketweb/module-shopping-feeds-google": "2.3.4",
+    "rocketweb/module-shopping-feeds-google-inventory": "2.3.2",
+    "rocketweb/module-shopping-feeds": "2.3.4"
+  },
+  "composer": {
+    "new_packages": 2,
+    "unrelated_lock_changes": 0,
+    "network_disabled": true,
+    "published_discovery_tested": false
+  },
+  "checks": {
+    "setup_upgrade": true,
+    "di_compile": true,
+    "importer_tests": 60,
+    "importer_assertions": 145,
+    "main_tests": 814,
+    "main_assertions": 1906,
+    "phpunit": "10.5.65",
+    "validator_regression_failed_before_fix": true,
+    "validator_php_files": 26,
+    "validator_xml_files": 7
+  },
+  "runtime": {
+    "generation": {
+      "701": {
+        "legacy": {
+          "exit_code": 0,
+          "rows": 1
+        },
+        "destination": {
+          "exit_code": 0,
+          "rows": 1
+        }
+      },
+      "702": {
+        "legacy": {
+          "exit_code": 0,
+          "rows": 1
+        },
+        "destination": {
+          "exit_code": 0,
+          "rows": 1
+        }
+      },
+      "703": {
+        "legacy": {
+          "exit_code": 0,
+          "rows": 1
+        },
+        "destination": {
+          "exit_code": 0,
+          "rows": 1
+        }
+      }
+    },
+    "rollback": true,
+    "activation": true,
+    "original_target_rows_preserved": true,
+    "receipts": 5
+  },
+  "lifecycle": {
+    "disabled": {
+      "phase": "disabled",
+      "receipts": 5,
+      "byte_identical": true,
+      "decryptable": 5,
+      "legacy_feeds": 5,
+      "original_target_rows_preserved": true,
+      "importer_enabled": false,
+      "admin_acl_builds": true,
+      "discovery_detects_legacy_without_importer": true
+    },
+    "removed": {
+      "phase": "removed",
+      "receipts": 5,
+      "byte_identical": true,
+      "decryptable": 5,
+      "legacy_feeds": 5,
+      "original_target_rows_preserved": true,
+      "importer_enabled": false,
+      "admin_acl_builds": true,
+      "discovery_detects_legacy_without_importer": true
+    },
+    "reinstalled": {
+      "phase": "reinstalled",
+      "receipts": 5,
+      "byte_identical": true,
+      "decryptable": 5,
+      "legacy_feeds": 5,
+      "original_target_rows_preserved": true,
+      "importer_enabled": true,
+      "admin_acl_builds": true,
+      "discovery_detects_legacy_without_importer": false
+    }
+  },
+  "restore": {
+    "tables": 15,
+    "tables_match": true,
+    "receipts": 5,
+    "decryptable": 5
+  },
+  "configuration_restore": {
+    "files": 2,
+    "byte_identical": true,
+    "archive_mode": "0o600",
+    "archive_sha256": "339f159fb5b3cd281a3f5034972da6793de49f189c6b495c9255bec682819774"
+  },
+  "limits": [
+    "Synthetic one-product native generation, not output-equivalence acceptance",
+    "Browser and external transfers not repeated on this profile",
+    "Known legacy inventory XML fails development-mode schema validation",
+    "Real-store, recipient, and published-package acceptance remain open"
+  ]
+}

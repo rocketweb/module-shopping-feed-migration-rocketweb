@@ -2,7 +2,7 @@
 
 An optional Magento module that copies Rocket Web Shopping Feeds configuration into `MageOS_ShoppingFeed`. Install it only on stores that are migrating. The main shopping feed module does not depend on this package.
 
-This is an unreleased development implementation. Disposable Mage-OS 3.5 checks cover Composer installation/removal, DI compilation, authenticated Admin import/activation/rollback, ACL and CSRF rejection, complex products, store and website scopes, loopback FTP/SFTP uploads, receipt retention, and backup restoration. Opt-in legacy compatibility patches passed local acceptance. Tests also found material differences in stock values, row counts, URLs and Google columns. A representative store migration and recipient acceptance remain release requirements. See the [acceptance record](docs/ACCEPTANCE-2026-09-30.md). No Packagist availability is implied.
+This is an unreleased development implementation. Disposable Mage-OS 3.5 checks cover Composer installation/removal, DI compilation, authenticated Admin import/activation/rollback, ACL and CSRF rejection, complex products, store and website scopes, loopback FTP/SFTP uploads, receipt retention, and backup restoration. A separate [Magento Open Source 2.4.8 check](docs/ACCEPTANCE-2026-10-03.md) covers installation, native generation, activation/rollback, and receipt retention with the destination 1.2.0 candidate. Opt-in legacy compatibility patches passed local acceptance. Tests also found material differences in stock values, row counts, URLs and Google columns. A representative store migration and recipient acceptance remain release requirements. See the [original acceptance record](docs/ACCEPTANCE-2026-09-30.md) for its broader catalog and browser scope. No Packagist availability is implied.
 
 ## What it does
 
@@ -20,7 +20,9 @@ The package identity is `rocketweb/module-shopping-feed-migration-rocketweb`; th
 
 ## Compatibility and boundaries
 
-The initial source baseline is Rocket Web Shopping Feeds 2.3.4, including its Google Shopping, Google Local Inventory, and Google Promotions add-ons. The destination dependency is `mage-os/module-shopping-feed:^1.1`. Other legacy versions and customized installations require staging validation. Both modules must be on the same Magento installation, with the same encryption key. Cross-store database imports are not supported.
+The initial source baseline is Rocket Web Shopping Feeds 2.3.4, with Google Shopping 2.3.4, Google Local Inventory 2.3.2, and Google Promotions 2.3.4. The destination dependency is `mage-os/module-shopping-feed:^1.1`. Other legacy versions and customized installations require staging validation. Both modules must be on the same Magento installation, with the same encryption key. Cross-store database imports are not supported.
+
+Recorded platform checks are Mage-OS 3.5.0 / PHP 8.4.24 with destination v1.1.0 and Magento Open Source 2.4.8 / PHP 8.4.24 with the pinned 1.2.0 candidate. The latter uses production mode: the original legacy inventory XML fails its own schema validation in developer mode. The importer's compatibility reader handles that XML independently. No original legacy XML was changed.
 
 Unmodified Rocket Web 2.3.4 has runtime failures on the tested Mage-OS 3.5 / Symfony 7.4 stack: missing command return types, image-mapper errors, and unhandled null parameters. [Opt-in compatibility patches](docs/LEGACY-COMPATIBILITY.md) address the reproduced failures in the base and Google Shopping packages. Their regression tests, Composer application and native CLI generation passed in the disposable environment. Installing this migration module does not apply them automatically. Validate the exact legacy packages and existing customizations on staging before installation.
 

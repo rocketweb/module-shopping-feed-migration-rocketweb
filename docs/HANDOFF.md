@@ -52,11 +52,21 @@ Regression tests were observed failing against the previous planner. The full im
 
 Fixture 210 / target 17 was disposable and is not in the protected sixteen-receipt backup. Restore the September 30 backup before running `verify-replacement-maps.php` again. No existing import was rewritten. The same store, platform, recipient, and publication gates remain open.
 
+## Completed on 2026-10-03
+
+The importer passed a separate Magento Open Source 2.4.8 / PHP 8.4.24 check using the destination 1.2.0 candidate. Local Composer installation, schema upgrade, DI compilation, native Generic/Google Shopping/Local Inventory test generation, activation, and rollback passed. Five encrypted receipts survived disable, Composer removal, and reinstall byte-for-byte. A separate restore matched 15 migration-related tables and decrypted all five receipts. Both configuration/key archive files restored identically. See [the platform acceptance record](ACCEPTANCE-2026-10-03.md).
+
+This continuation fixed the development validator's duplicate registration when Magento already contains a Composer-installed importer. The regression failed before the fix. Current importer results on Magento 2.4.8: **60 tests, 145 assertions**, using PHPUnit 10.5.65. Syntax/schema checks cover 26 PHP/template files and seven XML documents. Importer runtime behavior did not change in this pass.
+
+The separate discovery change was refreshed onto main-module candidate `ca9030c0ad843fa8d1eea5c638071b2734b579a7`, applying cleanly. It is now committed locally as `93bcbe68c593202462462506b8b6c5ff72675fb0` in `/private/tmp/shopping-feed-migration-discovery-20261003`, branch `feat/rocketweb-migration-discovery-20261003`; its patch is `/private/tmp/shopping-feed-migration-discovery-20261003.patch`. The full main suite passed **814 tests, 1,906 assertions**. Native checks confirmed Admin ACL construction and legacy detection while the importer was absent. The primary checkout was clean and was not edited. Publication and Composer `suggest` remain deferred.
+
+The additional disposable runtime is `/private/tmp/rocketweb-migration-magento-248-20261003`. Its protected `evidence/after-acceptance.sql` contains five receipts, and `evidence/configuration-and-key.tar.gz` contains the matching configuration/key. These are independent of the September 30 Mage-OS backups below. The retained clone uses production mode; the known original inventory XML schema defect still prevents legacy generation in developer mode. No source XML was changed. This profile did not repeat browser, transfer, or complex-product acceptance.
+
 ## Important compatibility finding
 
 The original legacy packages still have the reproduced compatibility defects. Reviewable patches, checksums, a read-only preflight, Composer examples and regression tests are now included. They are opt-in and have only been applied to disposable copies. The original sibling source checkouts remain unchanged. Validate customizations, other platform versions, and actual store distributions before applying them elsewhere.
 
-## Separate main-module change
+## Original separate main-module change
 
 The discovery notice is implemented in `/private/tmp/shopping-feed-migration-discovery-20260930`, branch `feat/rocketweb-migration-discovery`, based on `55ee46717406c7e2166ed75e76d27724e9a34486`. It is committed locally as `c137c44`. Its patch is `/private/tmp/shopping-feed-migration-discovery-20260930.patch`.
 
@@ -67,9 +77,9 @@ The primary checkout `/Users/matt/code/module-shopping-feed` was not edited by t
 ## Next work
 
 1. Review the importer normalization, column-map validation, and opt-in legacy patches. Review stock, row-count, URL, and Google-column differences before accepting output. The local compatibility blockers are reproduced and fixed, but existing-store acceptance remains open.
-2. Repeat installation/removal on the intended platform, including Magento Open Source if supported. Mage-OS 3.5 with local Composer path repositories passed; published package discovery remains untested.
+2. Repeat installation/removal on any additional intended platform. Mage-OS 3.5 / destination v1.1.0 and Magento Open Source 2.4.8 / pinned destination 1.2.0 candidate passed with local Composer path repositories. Published package discovery remains untested.
 3. Run representative store and external-recipient acceptance before cutover. Synthetic complex-product, scope, mapping, and SFTP checks are documented, with explicit limits.
-4. Review/integrate the separate main-module notice. Publish its installation target before release; only then add Composer `suggest`.
+4. Review/integrate the refreshed October 3 main-module notice branch. Publish its installation target before release; only then add Composer `suggest`.
 5. Local commits are authorized. Obtain explicit authorization before pushing or publishing a tested release. Verify package registration/discovery independently.
 
 The disposable runtime is `/private/tmp/rocketweb-migration-acceptance-20260930`. The final Composer-installed destination is v1.1.0. The latest recovery artifacts are `after-compatibility-acceptance.sql` (sixteen receipts) and `after-compatibility-files.tar.gz` (502 verified files, including patched code). Both have mode `0600`; their restore checks passed. Earlier backups represent earlier fixtures. Test services are stopped; the protected SQL/file backups and local evidence remain. The tmpfs database is not durable. Read the acceptance record before restarting or rerunning one-shot seed scripts.

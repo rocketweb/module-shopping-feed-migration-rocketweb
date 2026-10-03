@@ -39,4 +39,8 @@ php dev/validate.php /path/to/magento
 composer validate --strict --no-check-publish
 ```
 
+The validator also works when the selected Magento installation already contains a Composer-installed copy of this module. It validates the current checkout without registering the module a second time. A subprocess regression reproduces the former duplicate-registration fatal.
+
+The [October 3 Magento Open Source continuation](ACCEPTANCE-2026-10-03.md) uses the installed PHPUnit 10.5.65 runner on Magento 2.4.8: **60 tests, 145 assertions**. It separately checks native CLI generation, schema upgrades, receipt retention, and restoration with the destination 1.2.0 candidate. This profile does not repeat the earlier authenticated browser or transfer tests.
+
 The [2026-09-30 acceptance record](ACCEPTANCE-2026-09-30.md) records a disposable full install, normal Composer install/remove/reinstall, DI compilation, authenticated Admin checks, complex-product and scope comparisons, isolated FTP/SFTP uploads, receipt retention, and database/file restore. Its continuation validates the opt-in legacy patches and native destination generation after parameter normalization. Material output differences remain documented. Before a production release, repeat acceptance with the supported destination release and the store's real configuration, catalog types, scopes, extensions, and recipient. Synthetic acceptance does not establish those store-specific results.

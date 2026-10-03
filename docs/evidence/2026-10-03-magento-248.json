@@ -27,14 +27,15 @@
   "checks": {
     "setup_upgrade": true,
     "di_compile": true,
-    "importer_tests": 60,
-    "importer_assertions": 145,
+    "importer_tests": 61,
+    "importer_assertions": 147,
     "main_tests": 814,
     "main_assertions": 1906,
     "phpunit": "10.5.65",
     "validator_regression_failed_before_fix": true,
     "validator_php_files": 26,
-    "validator_xml_files": 7
+    "validator_xml_files": 7,
+    "installed_path_zero_file_regression_failed_before_fix": true
   },
   "runtime": {
     "generation": {

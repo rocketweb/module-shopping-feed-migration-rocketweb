@@ -19,7 +19,7 @@ The clone reused retained synthetic Magento dependencies and a database backup. 
 
 - Composer installed exactly two packages: destination and importer. Original locked dependencies were unchanged. Installation used local path repositories and retained lock metadata with networking disabled.
 - Schema upgrade and DI compilation passed with all legacy modules enabled. The native Admin ACL built successfully with and without the importer.
-- Importer PHPUnit 10.5.65: **60 tests, 145 assertions**. Main-module suite including discovery: **814 tests, 1,906 assertions**. Importer validation checked 26 PHP/template files and seven XML documents; main-module consolidation checked 26 XML files and eight feed types.
+- Importer PHPUnit 10.5.65: **61 tests, 147 assertions**. Main-module suite including discovery: **814 tests, 1,906 assertions**. Importer validation checked 26 PHP/template files and seven XML documents; main-module consolidation checked 26 XML files and eight feed types.
 - Native CLI preview/import created five synthetic migrations, preserving source records and holding schedules/uploads. Default column maps for Generic, Google Shopping, and Local Inventory each generated one row in both legacy and destination test mode using a synthetic product with an image. Destination feeds remained disabled after generation. This checks successful generation, not output equivalence.
 - Rollback removed its unchanged test target and retained its receipt. Activation restored a held schedule and decryptable synthetic SFTP credentials. No worker or transfer ran; the activated target was returned to an inactive state before lifecycle checks.
 - The sixteen pre-existing destination feed rows remained unchanged.
@@ -28,7 +28,7 @@ The clone reused retained synthetic Magento dependencies and a database backup. 
 
 ## Findings and limits
 
-The development validator previously registered the module again after loading a Magento installation that already contained it. That caused a duplicate-registration fatal. A subprocess regression was observed failing; the validator now keeps the existing registration and validates the checkout. Both installed-copy and uninstalled-copy checks pass. No importer runtime change was needed for this Magento profile.
+The development validator previously registered the module again after loading a Magento installation that already contained it. That caused a duplicate-registration fatal. Final installed-package verification also found that the validator excluded every file when its own root was under `vendor`, reporting success with zero files checked. Both subprocess regressions were observed failing. The validator now keeps the existing registration and applies dependency exclusions relative to the package root. Both installed-copy and uninstalled-copy checks pass. No importer runtime change was needed for this Magento profile.
 
 Legacy generation initially failed in developer mode because the inventory XML omits its own required encoding element, as documented in the original handoff. Production mode avoids that legacy schema-validation path. The importer continues using its compatibility reader; no original XML or source checkout was edited. An initial imageless catalog fixture was correctly skipped by the legacy required-image filter; the final test supplied a synthetic image and retained the default filter.
 

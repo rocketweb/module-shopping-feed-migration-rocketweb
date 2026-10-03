@@ -18,7 +18,8 @@ libxml_set_external_entity_loader([$resolver, 'registerEntityLoader']);
 $count = 0;
 $phpCount = 0;
 foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS)) as $file) {
-    if (str_contains($file->getPathname(), '/.git/') || str_contains($file->getPathname(), '/vendor/')) {
+    $relativePath = substr($file->getPathname(), strlen($root));
+    if (str_contains($relativePath, '/.git/') || str_contains($relativePath, '/vendor/')) {
         continue;
     }
     if ($file->getExtension() === 'xml' && $file->getFilename() !== 'phpunit.xml.dist') {

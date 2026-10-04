@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace RocketWeb\ShoppingFeedMigration\Test\Unit;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RocketWeb\ShoppingFeedMigration\Model\{Planner, Definitions, ConfigCodec};
 use Magento\Framework\Encryption\EncryptorInterface;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class PlannerTest extends TestCase
 {
     public static function definition(): array
@@ -58,6 +60,7 @@ class PlannerTest extends TestCase
         $this->planner(false)->build(self::source());
     }
     /** @dataProvider columnMapPaths */
+    #[DataProvider('columnMapPaths')]
     public function testUnknownDirectivesBlockImport(string $path): void
     {
         $source = self::source();
@@ -67,6 +70,7 @@ class PlannerTest extends TestCase
     }
 
     /** @dataProvider invalidColumnMaps */
+    #[DataProvider('invalidColumnMaps')]
     public function testMalformedColumnMapsBlockImport(string $path, mixed $map): void
     {
         $source = self::source();
@@ -97,6 +101,7 @@ class PlannerTest extends TestCase
     }
 
     /** @dataProvider validReplacementMaps */
+    #[DataProvider('validReplacementMaps')]
     public function testSupportedReplacementRulesArePreserved(mixed $map): void
     {
         $source = self::source();
@@ -120,6 +125,7 @@ class PlannerTest extends TestCase
     }
 
     /** @dataProvider columnMapPaths */
+    #[DataProvider('columnMapPaths')]
     public function testDestinationRegisteredDirectivesArePreserved(string $path): void
     {
         $map = [['column' => 'id', 'attribute' => 'directive_custom', 'param' => 'fixture']];
@@ -137,6 +143,7 @@ class PlannerTest extends TestCase
     }
 
     /** @dataProvider columnMapPaths */
+    #[DataProvider('columnMapPaths')]
     public function testNullColumnParametersNormalizeWithoutChangingOtherValuesOrSource(string $path): void
     {
         $columns = [
@@ -165,6 +172,7 @@ class PlannerTest extends TestCase
     }
 
     /** @dataProvider columnMapPaths */
+    #[DataProvider('columnMapPaths')]
     public function testNullWeightParameterRetainsTheMapperDefault(string $path): void
     {
         $columns = [['column' => 'shipping_weight', 'attribute' => 'directive_shipping_weight', 'param' => null]];
@@ -190,6 +198,7 @@ class PlannerTest extends TestCase
         self::assertSame('', $columns[0]['param']);
     }
     /** @dataProvider invalidFilenames */
+    #[DataProvider('invalidFilenames')]
     public function testRejectsFilenamesTheDestinationCannotGenerate(string $path, string $value): void
     {
         $source = self::source();

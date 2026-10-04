@@ -2,12 +2,13 @@
 
 Opt-in patches are available for the original `rocketweb/module-shopping-feeds:2.3.4` and `rocketweb/module-shopping-feeds-google:2.3.4` packages. The September version was tested with Mage-OS 3.5.0, PHP 8.4.24, and Symfony Console 7.4.17. The current version additionally handles feed saves and passed full generation on Magento Open Source 2.4.8 / PHP 8.4.24 / Symfony Console 6.4.47. Installing this migration module does not apply these patches or install a patching plugin.
 
-The base patch changes eight legacy files; the Google patch changes one add-on file:
+The release-candidate base patch changes nine legacy files; the Google patch changes one add-on file:
 
 | File | Correction |
 | --- | --- |
 | `Console/Command/GenerateCommand.php` | Adds Symfony's required `int` return type |
 | `Console/Command/ScheduleCommand.php` | Adds Symfony's required `int` return type |
+| `Model/Product/Adapter/AdapterAbstract.php` | Uses `(bool)` to avoid PHP 8.5's deprecated `(boolean)` cast |
 | `Model/Feed.php` | Cleans strings without passing null to `strtr()` during native full generation; preserves null mapper defaults and numeric values |
 | `Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php` | Gets the feed through the adapter and replaces nonexistent `strip()` with `trim()` |
 | `Model/Product/Mapper/Generic/Simple/Shipping.php` | Checks country configuration is an array before filtering it; unset shipping produces an empty field |
@@ -93,3 +94,9 @@ Twenty-three tests and 55 assertions passed after Composer reinstalled and patch
 The preflight rejected a synthetic customization and another package version. Reversing the patch in an isolated copy restored every original hash. To remove it from a Composer project, remove only its definition, relock patches, and rebuild/reinstall the legacy package through the reviewed deployment process. Reversal restores the original runtime defects; it is not a working Mage-OS 3.5 configuration. Use the backed-up compatible code/platform when reversing a deployment.
 
 The September patches passed Mage-OS `setup:upgrade`, DI compilation, CLI test-product generation, and expanded feed generation. See [compatibility evidence](evidence/2026-09-30-legacy-compatibility.json) and the [acceptance record](ACCEPTANCE-2026-09-30.md). The additional feed-save correction is covered by the October Magento acceptance above. No existing store or external recipient was changed.
+
+## 1.0.0 release-candidate continuation
+
+Strict legacy checks also reproduced a PHP 8.5 deprecation when loading the original adapter. The opt-in base patch now changes that cast to `(bool)`. The complete nine-file base patch and one-file Google patch apply with zero fuzz; patched preflight checks pass, and reversal restores every original file hash. Their Composer example and manifests carry the updated checksum.
+
+The separate legacy suite now passes **24 tests, 58 assertions** on Magento 2.4.8/PHP 8.4/PHPUnit 10 and **24 tests, 112 assertions** on Mage-OS 3.5/PHP 8.5/PHPUnit 12. A per-test deprecation handler preserves strict checking without PHPUnit 9's obsolete XML setting. This PHP 8.5 result covers the standalone legacy regression suite; full store installation and generation on PHP 8.5 have not been repeated. See [release preparation](RELEASE-1.0.0-PREPARATION.md).

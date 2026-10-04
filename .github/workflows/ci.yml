@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.1', '8.2', '8.3', '8.4', '8.5']
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2.9.8
+      - run: composer validate --strict --no-check-publish
+      - name: Check PHP syntax
+        run: find . -path './.git' -prune -o -type f \( -name '*.php' -o -name '*.phtml' \) -print0 | xargs -0 -n1 php -l
+
+  migration:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: magento/project-community-edition:2.4.8-p5
+            repository: https://mirror.mage-os.org/
+          - platform: mage-os/project-community-edition:3.5.0
+            repository: https://repo.mage-os.org/
+    services:
+      database:
+        image: mariadb:11.4
+        env:
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: '1'
+          MARIADB_DATABASE: feed_migration_test
+        ports:
+          - 13389:3306
+        options: >-
+          --health-cmd='healthcheck.sh --connect --innodb_initialized'
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          path: companion
+      - uses: graycoreio/github-actions-magento2/setup-magento@a65d0e50647829a9f6f972d72d87054a9c848fe0 # v8.9.0
+        id: magento
+        with:
+          php-version: '8.4'
+          tools: composer:v2.9.8
+          mode: extension
+          magento_version: ${{ matrix.platform }}
+          magento_repository: ${{ matrix.repository }}
+      - name: Install the current companion checkout
+        working-directory: ${{ steps.magento.outputs.path }}
+        env:
+          IMPORTER_ROOT: ${{ github.workspace }}/companion
+          COMPOSER_MIRROR_PATH_REPOS: '1'
+        run: |
+          composer config repositories.local path "$IMPORTER_ROOT"
+          composer require 'rocketweb/module-shopping-feed-migration-rocketweb:@dev' --no-interaction
+          composer audit --locked --abandoned=report
+      - name: Run importer and disposable database regressions
+        working-directory: companion
+        env:
+          MAGENTO_ROOT: ${{ steps.magento.outputs.path }}
+          MIGRATION_TEST_DB: feed_migration_test
+        run: |
+          export SHOPPING_FEED_ROOT="$MAGENTO_ROOT/vendor/mage-os/module-shopping-feed"
+          php "$MAGENTO_ROOT/vendor/bin/phpunit" -c phpunit.xml.dist
+          php dev/validate.php "$MAGENTO_ROOT"

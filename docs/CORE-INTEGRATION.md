@@ -28,3 +28,9 @@ The same six-file discovery change is now prepared on the main module's 1.2.0 ca
 On the Magento Open Source 2.4.8 framework, the full main-module suite passed **814 tests, 1,906 assertions**. Consolidation validation passed for 26 XML files and eight feed types. The installed candidate compiled with the importer and legacy modules. Native checks built the Admin ACL and detected the legacy module while the importer was disabled and Composer-removed. The earlier browser checks remain evidence for their September 30 baseline; they were not repeated for this candidate. See [the platform acceptance record](ACCEPTANCE-2026-10-03.md).
 
 This is still a separate local integration branch. The notice's installation target must be published before release, and Composer `suggest` remains deferred until then.
+
+## Included in the local 1.2.1 candidate
+
+The existing six-file notice is now integrated into the isolated main-module `release/1.2.1` worktree, based on released v1.2.0 (`4b168b8ddaca7c72572710948db9ecd320a85c98`). The candidate includes the companion in Composer `suggest`, with validation requiring that it remain optional. The older prepared branches above remain historical evidence.
+
+The main-module release draft and wiki describe companion 1.0.0, staging review, explicit import/activation, and recipient URL cutover. The installation target and companion Composer registration must be published and verified before the coordinated launch is announced. No source, wiki, release, or package publication occurred as part of this preparation.

@@ -106,3 +106,15 @@ diff --git a/Model/Feed.php b/Model/Feed.php
                  }
              }
          );
+diff --git a/Model/Product/Adapter/AdapterAbstract.php b/Model/Product/Adapter/AdapterAbstract.php
+--- a/Model/Product/Adapter/AdapterAbstract.php
++++ b/Model/Product/Adapter/AdapterAbstract.php
+@@ -1228,7 +1228,7 @@
+      */
+     public function isTestMode()
+     {
+-        return (boolean)$this->isTestMode;
++        return (bool)$this->isTestMode;
+     }
+ 
+     /**

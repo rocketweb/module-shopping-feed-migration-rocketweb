@@ -11,6 +11,7 @@ use Magento\Framework\Encryption\EncryptorInterface;
 use MageOS\ShoppingFeed\Model\FeedTypes\Config\{Reader, Converter, SchemaLocator};
 use RocketWeb\ShoppingFeedMigration\Model\{Definitions, Planner, ConfigCodec};
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class LegacyDefinitionsTest extends TestCase
 {
     public function testRealLegacyDefinitionsMergeAndPlanAllThreeTypes(): void

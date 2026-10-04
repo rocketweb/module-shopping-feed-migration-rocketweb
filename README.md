@@ -2,7 +2,9 @@
 
 An optional Magento module that copies Rocket Web Shopping Feeds configuration into `MageOS_ShoppingFeed`. Install it only on stores that are migrating. The main shopping feed module does not depend on this package.
 
-This is an unreleased development implementation. Disposable Mage-OS 3.5 checks cover Composer installation/removal, DI compilation, authenticated Admin import/activation/rollback, ACL and CSRF rejection, complex products, store and website scopes, loopback FTP/SFTP uploads, receipt retention, and backup restoration. A separate [Magento Open Source 2.4.8 check](docs/ACCEPTANCE-2026-10-03.md) covers installation, native generation, activation/rollback, and receipt retention with the destination 1.2.0 candidate. Opt-in legacy compatibility patches passed local acceptance. Tests also found material differences in stock values, row counts, URLs and Google columns. A representative store migration and recipient acceptance remain release requirements. See the [original acceptance record](docs/ACCEPTANCE-2026-09-30.md) for its broader catalog and browser scope. No Packagist availability is implied.
+**Version 1.0.0** accompanies Mage-OS Shopping Feed 1.2.1. Read the [release notes](docs/releases/1.0.0.md). The companion suite passes against 1.2.1, including disposable database import, activation, and rollback checks.
+
+Disposable Mage-OS 3.5 checks cover Composer installation/removal, DI compilation, authenticated Admin import/activation/rollback, ACL and CSRF rejection, complex products, store and website scopes, loopback FTP/SFTP uploads, receipt retention, and backup restoration. A separate [Magento Open Source 2.4.8 check](docs/ACCEPTANCE-2026-10-03.md) covers installation, native generation, activation/rollback, and receipt retention with the earlier destination 1.2.0 candidate. Opt-in legacy compatibility patches passed local acceptance. Tests also found material differences in stock values, row counts, URLs and Google columns. A representative store migration and recipient acceptance remain cutover requirements. See the [original acceptance record](docs/ACCEPTANCE-2026-09-30.md) for its broader catalog and browser scope and [current release preparation](docs/RELEASE-1.0.0-PREPARATION.md) for the verified local scope.
 
 ## What it does
 
@@ -40,14 +42,18 @@ Test on staging first. Back up the database, generated feeds, code, configuratio
 
 **Keep the legacy Magento module enabled during `setup:upgrade`.** Disabling a module that owns declarative schema can cause its tables to be dropped. Stop scheduled generation through the legacy feed settings or scheduler while making the cutover; disabling a feed is different from disabling its module. See [Adobe's declarative schema documentation](https://developer.adobe.com/commerce/php/development/components/declarative-schema/configuration).
 
-Before this package has a published release, install its checkout as a local Composer path repository in a disposable or staging project. Use an explicit path and a development constraint:
+Install the stable packages through Composer:
 
 ```sh
-composer config repositories.rocketweb-feed-migration path /absolute/path/module-shopping-feed-migration-rocketweb
-composer require rocketweb/module-shopping-feed-migration-rocketweb:@dev
+composer require 'mage-os/module-shopping-feed:^1.2.1' \
+  'rocketweb/module-shopping-feed-migration-rocketweb:^1.0' --no-update
+composer update mage-os/module-shopping-feed \
+  rocketweb/module-shopping-feed-migration-rocketweb --with-dependencies
 bin/magento module:enable RocketWeb_ShoppingFeedMigration
 bin/magento setup:upgrade
 ```
+
+The destination dependency remains `^1.1` for the previously tested installation paths. The coordinated launch instructions select 1.2.1 so migrations receive its pricing, backorder, and description fixes.
 
 Follow the store's normal build and deployment process, including DI compilation and static content deployment where required. Composer installation does not run a migration. This module contains no automatic data patches and no Composer installer executed from Admin.
 

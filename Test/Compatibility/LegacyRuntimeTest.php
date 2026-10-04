@@ -10,6 +10,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject;
 use Magento\Store\Model\Store;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RocketWeb\ShoppingFeeds\Model\Feed;
 use RocketWeb\ShoppingFeeds\Model\Logger;
 use RocketWeb\ShoppingFeeds\Model\Generator\Cache;
@@ -24,8 +25,23 @@ use RocketWeb\ShoppingFeeds\Model\Product\Mapper\Generic\Grouped\Associated\Url 
 use RocketWeb\ShoppingFeedsGoogle\Model\Product\Mapper\Google\Simple\IdentifierExists;
 use Symfony\Component\Process\Process;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class LegacyRuntimeTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        set_error_handler(static function (int $severity, string $message): never {
+            throw new \ErrorException($message, 0, $severity);
+        }, E_DEPRECATED | E_USER_DEPRECATED);
+    }
+
+    protected function tearDown(): void
+    {
+        restore_error_handler();
+        parent::tearDown();
+    }
+
     public function testSavingColumnsPreservesNullDefaultsAndCleansStrings(): void
     {
         $columns = [['column' => "shipping\tweight", 'attribute' => 'directive_shipping_weight',
@@ -74,6 +90,7 @@ class LegacyRuntimeTest extends TestCase
     }
 
     /** @dataProvider imageDelimiters */
+    #[DataProvider('imageDelimiters')]
     public function testAdditionalImagesUseFeedDelimiter(string $delimiter, string $other, string $separator): void
     {
         $result = $this->mapImages($delimiter, $other, [
@@ -100,6 +117,7 @@ class LegacyRuntimeTest extends TestCase
     }
 
     /** @dataProvider emptyShippingCountries */
+    #[DataProvider('emptyShippingCountries')]
     public function testUnconfiguredShippingDoesNotRequestRates($countries): void
     {
         $cache = $this->createMock(Cache::class);
@@ -121,6 +139,7 @@ class LegacyRuntimeTest extends TestCase
     }
 
     /** @dataProvider urlQueries */
+    #[DataProvider('urlQueries')]
     public function testUrlQueryHandlesNullAndPreservesConfiguredValues(string $class, ?string $query, string $suffix): void
     {
         $product = $this->createMock(Product::class);
@@ -158,6 +177,7 @@ class LegacyRuntimeTest extends TestCase
     }
 
     /** @dataProvider identifierColumns */
+    #[DataProvider('identifierColumns')]
     public function testGoogleIdentifiersHandleNullAndConfiguredColumns(?string $param, array $values, string $expected): void
     {
         if (!getenv('LEGACY_GOOGLE_PATCH_ROOT')) {

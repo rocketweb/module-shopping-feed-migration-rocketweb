@@ -4,7 +4,7 @@
       {
         "description": "Rocket Web 2.3.4 runtime compatibility for migration acceptance",
         "url": "patches/rocketweb-shopping-feeds-2.3.4-runtime-compatibility.patch",
-        "sha256": "53fc81fe5bbf99ca25bb0d7435fb6045ef32b29ac4d94c6253cb42cb4eb0c27b",
+        "sha256": "8882b264a23da5448255889c61bb542c82243f1d2b8a7c4f484f4eae3a993007",
         "depth": 1
       }
     ],

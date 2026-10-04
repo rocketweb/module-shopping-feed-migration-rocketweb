@@ -7,6 +7,7 @@ namespace RocketWeb\ShoppingFeedMigration\Test\Unit;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class AdminBlockTest extends TestCase
 {
     public function testAdminBlockLoadsWithTheInstalledMagentoParent(): void

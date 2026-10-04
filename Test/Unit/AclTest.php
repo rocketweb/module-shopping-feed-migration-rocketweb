@@ -7,6 +7,7 @@ namespace RocketWeb\ShoppingFeedMigration\Test\Unit;
 use Magento\Framework\Config\Dom;
 use PHPUnit\Framework\TestCase;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class AclTest extends TestCase
 {
     public function testMergedAclDoesNotDuplicateDestinationResources(): void

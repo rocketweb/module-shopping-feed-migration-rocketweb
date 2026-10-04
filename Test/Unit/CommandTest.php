@@ -9,6 +9,7 @@ use RocketWeb\ShoppingFeedMigration\Console\MigrateCommand;
 use RocketWeb\ShoppingFeedMigration\Model\{Migration, Repository};
 use Symfony\Component\Console\Tester\CommandTester;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class CommandTest extends TestCase
 {
     public function testImportWithoutApplyIsOnlyPreview(): void

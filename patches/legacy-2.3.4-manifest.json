@@ -2,7 +2,7 @@
   "package": "rocketweb/module-shopping-feeds",
   "version": "2.3.4",
   "patch": "rocketweb-shopping-feeds-2.3.4-runtime-compatibility.patch",
-  "patch_sha256": "53fc81fe5bbf99ca25bb0d7435fb6045ef32b29ac4d94c6253cb42cb4eb0c27b",
+  "patch_sha256": "8882b264a23da5448255889c61bb542c82243f1d2b8a7c4f484f4eae3a993007",
   "files": {
     "Console/Command/GenerateCommand.php": {
       "original_sha256": "1128aef9ed30d1b63351a8ecaff9789d332d1dc13d4e20c8775ed2e03f4b3f66",
@@ -35,6 +35,10 @@
     "Model/Feed.php": {
       "original_sha256": "adaa7a3b2342fb23cf4049792b2fba6dc961293522ca81f52d1f0f2994f573fe",
       "patched_sha256": "e463aaa2ceb20113bd4c766fff4ce30f971d54034a06eed21b18841622a9a5c9"
+    },
+    "Model/Product/Adapter/AdapterAbstract.php": {
+      "original_sha256": "f7e5623d74e5010ee712690bc0a1154ca7f98ee3cabdb306ff3096c16f59b14b",
+      "patched_sha256": "5a77952a5dc375ca23d8eb3dc484cc4a842b790392a793fa16374a17649a1299"
     }
   }
 }

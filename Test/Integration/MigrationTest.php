@@ -17,6 +17,7 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Setup\Declaration\Schema\Dto\Factories\Table as TableFactory;
 use RocketWeb\ShoppingFeedMigration\Test\Unit\PlannerTest;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class MigrationTest extends TestCase
 {
     private Mysql $db;
@@ -30,6 +31,10 @@ class MigrationTest extends TestCase
         if (getenv('MIGRATION_TEST_DB') !== 'feed_migration_test') {
             self::markTestSkipped('Set MIGRATION_TEST_DB=feed_migration_test for a disposable local database.');
         }
+        $port = getenv('MIGRATION_TEST_PORT') ?: '13389';
+        if (!ctype_digit($port) || (int)$port < 1024 || (int)$port > 65535) {
+            throw new \RuntimeException('MIGRATION_TEST_PORT must be a local unprivileged port.');
+        }
         $renderers = [];
         foreach (['Distinct', 'Columns', 'Union', 'From', 'Where', 'Group', 'Having', 'Order', 'Limit', 'ForUpdate'] as $i => $name) {
             $class = 'Magento\\Framework\\DB\\Select\\' . $name . 'Renderer';
@@ -41,7 +46,7 @@ class MigrationTest extends TestCase
             new \Magento\Framework\Stdlib\DateTime(),
             new Quiet(),
             new SelectFactory(new SelectRenderer($renderers)),
-            ['host' => '127.0.0.1:13389', 'dbname' => 'feed_migration_test', 'username' => 'root', 'password' => ''],
+            ['host' => '127.0.0.1:' . $port, 'dbname' => 'feed_migration_test', 'username' => 'root', 'password' => ''],
             new Json(),
             $this->createMock(TableFactory::class)
         );

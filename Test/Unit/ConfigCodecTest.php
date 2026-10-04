@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace RocketWeb\ShoppingFeedMigration\Test\Unit;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RocketWeb\ShoppingFeedMigration\Model\ConfigCodec;
 
+#[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
 class ConfigCodecTest extends TestCase
 {
     public function testPreservesStructuredSettingsAndNumericLookingStrings(): void
@@ -18,6 +20,7 @@ class ConfigCodecTest extends TestCase
         self::assertSame('__mageos_shopping_feed_string__:"[literal]"', $codec->encode('[literal]'));
     }
     /** @dataProvider invalidSettings */
+    #[DataProvider('invalidSettings')]
     public function testRejectsUnsafeSerialization(string $input): void
     {
         $this->expectException(\DomainException::class);

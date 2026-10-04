@@ -42,9 +42,11 @@ Test on staging first. Back up the database, generated feeds, code, configuratio
 
 **Keep the legacy Magento module enabled during `setup:upgrade`.** Disabling a module that owns declarative schema can cause its tables to be dropped. Stop scheduled generation through the legacy feed settings or scheduler while making the cutover; disabling a feed is different from disabling its module. See [Adobe's declarative schema documentation](https://developer.adobe.com/commerce/php/development/components/declarative-schema/configuration).
 
-Install the stable packages through Composer:
+Install the companion from its published GitHub tags by adding its public source repository to the store's root Composer configuration, then select the stable packages:
 
 ```sh
+composer config repositories.shopping-feed-migration-rocketweb vcs \
+  https://github.com/rocketweb/module-shopping-feed-migration-rocketweb.git
 composer require 'mage-os/module-shopping-feed:^1.2.1' \
   'rocketweb/module-shopping-feed-migration-rocketweb:^1.0' --no-update
 composer update mage-os/module-shopping-feed \

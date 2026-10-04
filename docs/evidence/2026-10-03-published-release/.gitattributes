@@ -1,0 +1,2 @@
+# Preserve generated TSV bytes, including empty trailing fields and line endings.
+*.tsv -text -whitespace

@@ -1,0 +1,527 @@
+{
+  "801": {
+    "legacy_rows": 9,
+    "destination_rows": 9,
+    "legacy_columns": [
+      "id",
+      "title",
+      "description",
+      "link",
+      "price",
+      "sale_price",
+      "image_link",
+      "category_image_link",
+      "availability",
+      "quantity",
+      "additional_image_link",
+      "sale_price_date",
+      "sku",
+      "options",
+      "shipping_weight",
+      "review average",
+      "review count"
+    ],
+    "destination_columns": [
+      "id",
+      "title",
+      "description",
+      "link",
+      "price",
+      "sale_price",
+      "image_link",
+      "category_image_link",
+      "availability",
+      "quantity",
+      "additional_image_link",
+      "sale_price_date",
+      "sku",
+      "options",
+      "shipping_weight",
+      "review average",
+      "review count"
+    ],
+    "missing_rows": [],
+    "added_rows": [],
+    "missing_columns": [],
+    "added_columns": [],
+    "changed_values": [
+      {
+        "id": "|3",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|4",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      }
+    ],
+    "byte_equal": false,
+    "legacy_sha256": "e7b52cd80cb09f2de0cf890fcf919fa04e6183b2bd20b7086d6d3dd22bba0535",
+    "destination_sha256": "893d45ce2c2ca1e10d7300621ffef654e59993c2eb2faaf9efac466b11ce6998"
+  },
+  "802": {
+    "legacy_rows": 9,
+    "destination_rows": 9,
+    "legacy_columns": [
+      "id",
+      "item_group_id",
+      "title",
+      "description",
+      "link",
+      "image_link",
+      "additional_image_link",
+      "availability",
+      "price",
+      "sale_price",
+      "sale_price_effective_date",
+      "brand",
+      "mpn",
+      "condition",
+      "product_type",
+      "google_product_category",
+      "identifier_exists",
+      "is_bundle",
+      "shipping",
+      "shipping_weight",
+      "promotions_id"
+    ],
+    "destination_columns": [
+      "item_group_id",
+      "item_group_title",
+      "variant_option",
+      "color",
+      "size",
+      "material",
+      "pattern",
+      "gender",
+      "age_group",
+      "title",
+      "description",
+      "link",
+      "image_link",
+      "additional_image_link",
+      "availability",
+      "price",
+      "sale_price",
+      "sale_price_effective_date",
+      "brand",
+      "mpn",
+      "condition",
+      "product_type",
+      "google_product_category",
+      "identifier_exists",
+      "is_bundle",
+      "shipping",
+      "shipping_weight",
+      "promotion_id",
+      "id"
+    ],
+    "missing_rows": [],
+    "added_rows": [],
+    "missing_columns": [
+      "promotions_id"
+    ],
+    "added_columns": [
+      "age_group",
+      "color",
+      "gender",
+      "item_group_title",
+      "material",
+      "pattern",
+      "promotion_id",
+      "size",
+      "variant_option"
+    ],
+    "changed_values": [
+      {
+        "id": "|1",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|2",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|3",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|3",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|4",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|4",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|5",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|6",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|7",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|8",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|9",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      }
+    ],
+    "byte_equal": false,
+    "legacy_sha256": "a49501e47a14db63250aa2027449a0e60af6d07c6fc2c55b863774a21f720fc0",
+    "destination_sha256": "277dd20a78911fd2f7ede7be6c664cc2edfde3530d5765cfb620a5713775768d"
+  },
+  "803": {
+    "legacy_rows": 8,
+    "destination_rows": 6,
+    "legacy_columns": [
+      "store_code",
+      "id",
+      "availability",
+      "price",
+      "sale_price",
+      "sale_price_effective_date",
+      "quantity"
+    ],
+    "destination_columns": [
+      "store_code",
+      "availability",
+      "price",
+      "sale_price",
+      "sale_price_effective_date",
+      "quantity",
+      "id"
+    ],
+    "missing_rows": [
+      "default|2",
+      "default|8",
+      "default|9"
+    ],
+    "added_rows": [
+      "default|5"
+    ],
+    "missing_columns": [],
+    "added_columns": [],
+    "changed_values": [],
+    "byte_equal": false,
+    "legacy_sha256": "a85fc9e360bdf8e8d231959ece4eb39385b7d6327f14b35b55bc76b4b84eb605",
+    "destination_sha256": "36707455717f353b7440a9d5a4510ce174edcf775d80cfe6286f7111ee983916"
+  },
+  "804": {
+    "legacy_rows": 9,
+    "destination_rows": 9,
+    "legacy_columns": [
+      "id",
+      "title",
+      "price",
+      "sale_price",
+      "availability",
+      "shipping_weight",
+      "product_type"
+    ],
+    "destination_columns": [
+      "id",
+      "title",
+      "price",
+      "sale_price",
+      "availability",
+      "shipping_weight",
+      "product_type"
+    ],
+    "missing_rows": [],
+    "added_rows": [],
+    "missing_columns": [],
+    "added_columns": [],
+    "changed_values": [
+      {
+        "id": "|migration-size-large",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|migration-size-small",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      }
+    ],
+    "byte_equal": false,
+    "legacy_sha256": "1144d6f36c967cfe4f250c2cd7b0a63a0e7bcf35944ca863f1d9df06bd7073c1",
+    "destination_sha256": "8acc08a4ed63e0f755541c377c920d7df3a2e214bf10d56649ae2e7491df605a"
+  },
+  "805": {
+    "legacy_rows": 9,
+    "destination_rows": 9,
+    "legacy_columns": [
+      "id",
+      "title",
+      "price",
+      "sale_price",
+      "availability",
+      "shipping_weight",
+      "product_type"
+    ],
+    "destination_columns": [
+      "title",
+      "price",
+      "sale_price",
+      "availability",
+      "shipping_weight",
+      "product_type",
+      "id"
+    ],
+    "missing_rows": [],
+    "added_rows": [],
+    "missing_columns": [],
+    "added_columns": [],
+    "changed_values": [
+      {
+        "id": "|migration-size-large",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|migration-size-small",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      }
+    ],
+    "byte_equal": false,
+    "legacy_sha256": "1144d6f36c967cfe4f250c2cd7b0a63a0e7bcf35944ca863f1d9df06bd7073c1",
+    "destination_sha256": "0246f8ad62d23974e6cd623b36cf055264e047c6f681f9a83fbace341e54072c"
+  },
+  "806": {
+    "legacy_rows": 9,
+    "destination_rows": 9,
+    "legacy_columns": [
+      "id",
+      "item_group_id",
+      "title",
+      "description",
+      "link",
+      "image_link",
+      "additional_image_link",
+      "availability",
+      "price",
+      "sale_price",
+      "sale_price_effective_date",
+      "brand",
+      "mpn",
+      "condition",
+      "product_type",
+      "google_product_category",
+      "identifier_exists",
+      "is_bundle",
+      "shipping",
+      "shipping_weight",
+      "promotions_id"
+    ],
+    "destination_columns": [
+      "item_group_id",
+      "item_group_title",
+      "variant_option",
+      "color",
+      "size",
+      "material",
+      "pattern",
+      "gender",
+      "age_group",
+      "title",
+      "description",
+      "link",
+      "image_link",
+      "additional_image_link",
+      "availability",
+      "price",
+      "sale_price",
+      "sale_price_effective_date",
+      "brand",
+      "mpn",
+      "condition",
+      "product_type",
+      "google_product_category",
+      "identifier_exists",
+      "is_bundle",
+      "shipping",
+      "shipping_weight",
+      "promotion_id",
+      "id"
+    ],
+    "missing_rows": [],
+    "added_rows": [],
+    "missing_columns": [
+      "promotions_id"
+    ],
+    "added_columns": [
+      "age_group",
+      "color",
+      "gender",
+      "item_group_title",
+      "material",
+      "pattern",
+      "promotion_id",
+      "size",
+      "variant_option"
+    ],
+    "changed_values": [
+      {
+        "id": "|1",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|2",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|3",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|3",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|4",
+        "column": "availability",
+        "legacy": "out_of_stock",
+        "destination": "in_stock"
+      },
+      {
+        "id": "|4",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|5",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|6",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|7",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|8",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      },
+      {
+        "id": "|9",
+        "column": "identifier_exists",
+        "legacy": "FALSE",
+        "destination": ""
+      }
+    ],
+    "byte_equal": false,
+    "legacy_sha256": "85bfb59b5acda28cf2879a86e4ef50ca74e5bdc90bb1a18bf9ea75512753652d",
+    "destination_sha256": "bcc25b7b6cef2aaef165752692d5f2a9300a2616a0ace9093f8035400ab7ca64"
+  },
+  "807": {
+    "legacy_rows": 4,
+    "destination_rows": 4,
+    "legacy_columns": [
+      "id",
+      "title",
+      "description",
+      "link",
+      "price",
+      "sale_price",
+      "image_link",
+      "category_image_link",
+      "availability",
+      "quantity",
+      "additional_image_link",
+      "sale_price_date",
+      "sku",
+      "options",
+      "shipping_weight",
+      "review average",
+      "review count"
+    ],
+    "destination_columns": [
+      "id",
+      "title",
+      "description",
+      "link",
+      "price",
+      "sale_price",
+      "image_link",
+      "category_image_link",
+      "availability",
+      "quantity",
+      "additional_image_link",
+      "sale_price_date",
+      "sku",
+      "options",
+      "shipping_weight",
+      "review average",
+      "review count"
+    ],
+    "missing_rows": [],
+    "added_rows": [],
+    "missing_columns": [],
+    "added_columns": [],
+    "changed_values": [],
+    "byte_equal": true,
+    "legacy_sha256": "d665b969aea029ffb28d16e5bb561aab7afc68113790d3a1039485cfe4049673",
+    "destination_sha256": "d665b969aea029ffb28d16e5bb561aab7afc68113790d3a1039485cfe4049673"
+  }
+}

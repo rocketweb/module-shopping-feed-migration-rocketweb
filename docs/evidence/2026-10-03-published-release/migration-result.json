@@ -1,0 +1,42 @@
+{
+    "801": {
+        "target_id": 1,
+        "source_unchanged": true,
+        "disabled_on_import": true,
+        "schedules_held": true,
+        "uploads_held": true,
+        "full_generation_completed": true
+    },
+    "802": {
+        "target_id": 2,
+        "source_unchanged": true,
+        "disabled_on_import": true,
+        "schedules_held": true,
+        "uploads_held": true,
+        "full_generation_completed": true
+    },
+    "803": {
+        "target_id": 3,
+        "source_unchanged": true,
+        "disabled_on_import": true,
+        "schedules_held": true,
+        "uploads_held": true,
+        "full_generation_completed": true
+    },
+    "804": {
+        "target_id": 4,
+        "source_unchanged": true,
+        "disabled_on_import": true,
+        "schedules_held": true,
+        "uploads_held": true,
+        "full_generation_completed": true
+    },
+    "805": {
+        "target_id": 5,
+        "source_unchanged": true,
+        "disabled_on_import": true,
+        "schedules_held": true,
+        "uploads_held": true,
+        "full_generation_completed": true
+    }
+}

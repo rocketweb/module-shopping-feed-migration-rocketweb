@@ -1,0 +1,7 @@
+﻿store_code	availability	price	sale_price	sale_price_effective_date	quantity	id
+default	in_stock	29.95 USD	19.95 USD	2026-10-02T20:00:00-04:00/2030-12-31T00:00:00+00:00	25	1
+default	in_stock	19.00 USD			25	5
+default	in_stock	19.00 USD			25	3
+default	in_stock	24.00 USD			25	4
+default	in_stock	12.00 USD			25	6
+default	in_stock	17.00 USD			25	7

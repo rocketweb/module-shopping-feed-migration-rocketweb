@@ -62,6 +62,16 @@ The separate discovery change was refreshed onto main-module candidate `ca9030c0
 
 The additional disposable runtime is `/private/tmp/rocketweb-migration-magento-248-20261003`. Its protected `evidence/after-acceptance.sql` contains five receipts, and `evidence/configuration-and-key.tar.gz` contains the matching configuration/key. These are independent of the September 30 Mage-OS backups below. The retained clone uses production mode; the known original inventory XML schema defect still prevents legacy generation in developer mode. No source XML was changed. This profile did not repeat browser, transfer, or complex-product acceptance.
 
+## Published v1.2.0 follow-up on 2026-10-03
+
+Matt explicitly requested legacy-first installation and actual feed comparison against the latest published destination. This is now exercised on a fresh Magento Open Source 2.4.8 store. The original Rocket Web packages generated five full baseline files while destination/importer code and schemas were absent. Composer then downloaded published v1.2.0 (`4b168b8ddaca7c72572710948db9ecd320a85c98`) from Packagist and mirrored the local importer. Two installs, no dependency updates. All 675 destination files match the release archive.
+
+This exposed and fixed a real importer defect: blanket null-parameter normalization erased the default `kg` weight unit. Only null URL parameters are normalized now; other null defaults are preserved. Both column-map regression cases failed before the fix. The original full-generation CLI also exposed `Feed::beforeSave()` passing null to `strtr()`. The opt-in legacy patch now cleans only strings, with a failing-then-passing regression and updated manifests. The source checkouts remain unchanged.
+
+After a pre-import database restore and corrected importer reinstall, all five native migrations and full generations passed. Two additional configured samples also passed. The four-row Generic sample is byte-identical. Complex Generic/Google samples retain all expected values except verified variant-availability and Google identifier/column changes. Local Inventory reflects MSI source assignment and configurable child sources; an explicit assigned-zero-stock probe preserves `out_of_stock`, quantity 0 and price exactly. Original inherited complex-parent weight defaults remain incomplete; an explicit-kg Google sample verifies all nine rows have complete units.
+
+Current results: **63 importer tests / 149 assertions**, **24 compatibility tests / 58 assertions**, **77 output assertions**, syntax/schema validation and DI compilation. See [the complete report and sample files](ACCEPTANCE-PUBLISHED-1.2.0.md). Runtime/probes/backups are under `/private/tmp/rocketweb-migration-release-20261003`; the new containers are removed after backup. No existing store, published destination code, push or release was changed. The older candidate/platform evidence above remains historical.
+
 ## Important compatibility finding
 
 The original legacy packages still have the reproduced compatibility defects. Reviewable patches, checksums, a read-only preflight, Composer examples and regression tests are now included. They are opt-in and have only been applied to disposable copies. The original sibling source checkouts remain unchanged. Validate customizations, other platform versions, and actual store distributions before applying them elsewhere.
@@ -77,7 +87,7 @@ The primary checkout `/Users/matt/code/module-shopping-feed` was not edited by t
 ## Next work
 
 1. Review the importer normalization, column-map validation, and opt-in legacy patches. Review stock, row-count, URL, and Google-column differences before accepting output. The local compatibility blockers are reproduced and fixed, but existing-store acceptance remains open.
-2. Repeat installation/removal on any additional intended platform. Mage-OS 3.5 / destination v1.1.0 and Magento Open Source 2.4.8 / pinned destination 1.2.0 candidate passed with local Composer path repositories. Published package discovery remains untested.
+2. Repeat installation/removal on any additional intended platform. Published destination v1.2.0 discovery, installation and generation now pass on Magento Open Source 2.4.8. Importer publication/discovery remains untested. The narrowed null normalization was verified against v1.2.0; repeat runtime acceptance before claiming unchanged behavior on older destination releases.
 3. Run representative store and external-recipient acceptance before cutover. Synthetic complex-product, scope, mapping, and SFTP checks are documented, with explicit limits.
 4. Review/integrate the refreshed October 3 main-module notice branch. Publish its installation target before release; only then add Composer `suggest`.
 5. Local commits are authorized. Obtain explicit authorization before pushing or publishing a tested release. Verify package registration/discovery independently.

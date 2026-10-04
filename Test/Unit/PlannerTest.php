@@ -140,7 +140,8 @@ class PlannerTest extends TestCase
     public function testNullColumnParametersNormalizeWithoutChangingOtherValuesOrSource(string $path): void
     {
         $columns = [
-            ['column' => 'null', 'attribute' => 'sku', 'param' => null],
+            ['column' => 'null', 'attribute' => 'directive_url', 'param' => null],
+            ['column' => 'attribute-default', 'attribute' => 'sku', 'param' => null],
             ['column' => 'missing', 'attribute' => 'sku'],
             ['column' => 'empty', 'attribute' => 'sku', 'param' => ''],
             ['column' => 'zero', 'attribute' => 'sku', 'param' => 0],
@@ -150,7 +151,7 @@ class PlannerTest extends TestCase
         ];
         $source = self::source();
         $source['config'][] = ['path' => $path, 'value' => json_encode($columns)];
-        $planner = $this->planner();
+        $planner = $this->planner(true, ['directive_url' => []]);
         $plan = $planner->build($source);
         $columns[0]['param'] = '';
         self::assertSame($columns, json_decode($plan['config'][$path], true));
@@ -163,12 +164,25 @@ class PlannerTest extends TestCase
         return [['columns_product_columns'], ['filters_map_replace_empty_columns']];
     }
 
+    /** @dataProvider columnMapPaths */
+    public function testNullWeightParameterRetainsTheMapperDefault(string $path): void
+    {
+        $columns = [['column' => 'shipping_weight', 'attribute' => 'directive_shipping_weight', 'param' => null]];
+        $source = self::source();
+        $source['config'][] = ['path' => $path, 'value' => json_encode($columns)];
+        $plan = $this->planner(true, ['directive_shipping_weight' => []])->build($source);
+        self::assertSame($columns, json_decode($plan['config'][$path], true));
+    }
+
     public function testInheritedNullColumnParameterIsNormalized(): void
     {
         $legacy = self::definition();
         $legacy['default_feed_config']['columns']['product_columns'][0]['param'] = null;
+        $legacy['default_feed_config']['columns']['product_columns'][0]['attribute'] = 'directive_url';
+        $target = self::definition();
+        $target['directives']['directive_url'] = [];
         $definitions = $this->createMock(Definitions::class);
-        $definitions->method('get')->willReturn([$legacy, self::definition()]);
+        $definitions->method('get')->willReturn([$legacy, $target]);
         $source = self::source();
         $source['uploads'] = [];
         $planner = new Planner($definitions, new ConfigCodec(), $this->createMock(EncryptorInterface::class));

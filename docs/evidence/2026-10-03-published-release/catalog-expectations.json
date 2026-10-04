@@ -1,0 +1,95 @@
+[
+    {
+        "entity_id": "1",
+        "sku": "migration-simple",
+        "type_id": "simple",
+        "salable": true,
+        "sources": [
+            {
+                "source_code": "default",
+                "quantity": "25.0000",
+                "status": "1"
+            }
+        ]
+    },
+    {
+        "entity_id": "2",
+        "sku": "migration-out-of-stock",
+        "type_id": "simple",
+        "salable": false,
+        "sources": []
+    },
+    {
+        "entity_id": "3",
+        "sku": "migration-size-large",
+        "type_id": "simple",
+        "salable": true,
+        "sources": [
+            {
+                "source_code": "default",
+                "quantity": "25.0000",
+                "status": "1"
+            }
+        ]
+    },
+    {
+        "entity_id": "4",
+        "sku": "migration-size-small",
+        "type_id": "simple",
+        "salable": true,
+        "sources": [
+            {
+                "source_code": "default",
+                "quantity": "25.0000",
+                "status": "1"
+            }
+        ]
+    },
+    {
+        "entity_id": "5",
+        "sku": "migration-configurable",
+        "type_id": "configurable",
+        "salable": true,
+        "sources": []
+    },
+    {
+        "entity_id": "6",
+        "sku": "migration-component-a",
+        "type_id": "simple",
+        "salable": true,
+        "sources": [
+            {
+                "source_code": "default",
+                "quantity": "25.0000",
+                "status": "1"
+            }
+        ]
+    },
+    {
+        "entity_id": "7",
+        "sku": "migration-component-b",
+        "type_id": "simple",
+        "salable": true,
+        "sources": [
+            {
+                "source_code": "default",
+                "quantity": "25.0000",
+                "status": "1"
+            }
+        ]
+    },
+    {
+        "entity_id": "8",
+        "sku": "migration-grouped",
+        "type_id": "grouped",
+        "salable": true,
+        "sources": []
+    },
+    {
+        "entity_id": "9",
+        "sku": "migration-bundle",
+        "type_id": "bundle",
+        "salable": true,
+        "sources": []
+    }
+]

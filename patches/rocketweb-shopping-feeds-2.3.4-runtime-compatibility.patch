@@ -94,3 +94,15 @@ diff --git a/Model/Product/Mapper/Generic/Simple/Url.php b/Model/Product/Mapper/
          if (substr($urlQuery, 0, 1) == '?') {
              $urlQuery = substr($urlQuery, 1);
          }
+diff --git a/Model/Feed.php b/Model/Feed.php
+--- a/Model/Feed.php
++++ b/Model/Feed.php
+@@ -264,7 +264,7 @@
+         $columns = $this->getConfig('columns_product_columns');
+         array_walk_recursive(
+             $columns, function (&$value, $key) {
+-                if (!is_array($value)) { $value = strtr($value, "\n\r\t", '   ');
++                if (is_string($value)) { $value = strtr($value, "\n\r\t", '   ');
+                 }
+             }
+         );

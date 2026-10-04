@@ -8,7 +8,7 @@ This is an unreleased development implementation. Disposable Mage-OS 3.5 checks 
 
 - Imports one feed at a time with its store, type, saved settings, and inherited defaults.
 - Preserves column maps, filters, category mappings, Google inventory settings, and promotion configuration when supported by the destination.
-- Converts null column parameters to empty strings for destination compatibility and lists this conversion in the preview. Source records remain unchanged.
+- Converts null URL parameters to empty strings for compatibility with older destination URL mappers and lists this conversion in the preview. Other null parameters retain their mapper defaults, including shipping weight units. Source records remain unchanged.
 - Creates a disabled destination feed with microdata off. Schedules and encrypted upload credentials are held in an encrypted database receipt until activation.
 - Keeps the original feed and database records intact.
 - Requires a current preview token and an operator-supplied backup reference before import. The reference records the operator's completed backup; the module does not create or verify that external backup.
@@ -20,9 +20,11 @@ The package identity is `rocketweb/module-shopping-feed-migration-rocketweb`; th
 
 ## Compatibility and boundaries
 
+The [published v1.2.0 acceptance](docs/ACCEPTANCE-PUBLISHED-1.2.0.md) starts with a fresh Magento Open Source 2.4.8 store and complete legacy feeds before installing either new package. It includes downloadable original/migrated samples, a byte-identical Generic example, the shipping-weight migration fix, and explicit checks for the remaining Google and MSI behavior differences.
+
 The initial source baseline is Rocket Web Shopping Feeds 2.3.4, with Google Shopping 2.3.4, Google Local Inventory 2.3.2, and Google Promotions 2.3.4. The destination dependency is `mage-os/module-shopping-feed:^1.1`. Other legacy versions and customized installations require staging validation. Both modules must be on the same Magento installation, with the same encryption key. Cross-store database imports are not supported.
 
-Recorded platform checks are Mage-OS 3.5.0 / PHP 8.4.24 with destination v1.1.0 and Magento Open Source 2.4.8 / PHP 8.4.24 with the pinned 1.2.0 candidate. The latter uses production mode: the original legacy inventory XML fails its own schema validation in developer mode. The importer's compatibility reader handles that XML independently. No original legacy XML was changed.
+Recorded platform checks are Mage-OS 3.5.0 / PHP 8.4.24 with destination v1.1.0 and Magento Open Source 2.4.8 / PHP 8.4.24 with both the 1.2.0 candidate and published v1.2.0. The latest planner correction is verified against the published v1.2.0 release. Magento acceptance uses production mode: the original legacy inventory XML fails its own schema validation in developer mode. The importer's compatibility reader handles that XML independently. No original legacy XML was changed.
 
 Unmodified Rocket Web 2.3.4 has runtime failures on the tested Mage-OS 3.5 / Symfony 7.4 stack: missing command return types, image-mapper errors, and unhandled null parameters. [Opt-in compatibility patches](docs/LEGACY-COMPATIBILITY.md) address the reproduced failures in the base and Google Shopping packages. Their regression tests, Composer application and native CLI generation passed in the disposable environment. Installing this migration module does not apply them automatically. Validate the exact legacy packages and existing customizations on staging before installation.
 

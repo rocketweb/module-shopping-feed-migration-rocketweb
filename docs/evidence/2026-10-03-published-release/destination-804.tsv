@@ -1,0 +1,10 @@
+﻿id	title	price	sale_price	availability	shipping_weight	product_type
+migration-simple	Café "Trail" & Camp Shirt	29.95 USD	19.95 USD	in_stock	1.25 kg	Clothing > Shirts
+migration-out-of-stock	Migration Out Of Stock	15.00 USD		out_of_stock	1.00 kg	Clothing > Shirts
+migration-configurable	Migration Configurable	19.00 USD		in_stock	1.00 	Clothing > Shirts
+migration-size-large	Migration Size Large	19.00 USD		in_stock	1.00 kg	Clothing > Shirts
+migration-size-small	Migration Size Small	24.00 USD		in_stock	1.00 kg	Clothing > Shirts
+migration-component-a	Migration Component A	12.00 USD		in_stock	1.00 kg	Clothing > Shirts
+migration-component-b	Migration Component B	17.00 USD		in_stock	1.00 kg	Clothing > Shirts
+migration-grouped	Migration Grouped	29.00 USD		in_stock	2.00 	Clothing > Shirts
+migration-bundle	Migration Bundle	12.00 USD		in_stock	1.00 	Clothing > Shirts

@@ -26,6 +26,32 @@ use Symfony\Component\Process\Process;
 
 class LegacyRuntimeTest extends TestCase
 {
+    public function testSavingColumnsPreservesNullDefaultsAndCleansStrings(): void
+    {
+        $columns = [['column' => "shipping\tweight", 'attribute' => 'directive_shipping_weight',
+            'param' => null, 'order' => 0]];
+        $config = new DataObject(['columns_product_columns' => $columns]);
+        $feed = $this->getMockBuilder(Feed::class)->disableOriginalConstructor()
+            ->onlyMethods(['getConfig', 'getId'])->getMock();
+        $feed->method('getId')->willReturn(1);
+        $feed->method('getConfig')->willReturnCallback(static fn($path = null) =>
+            $path === null ? $config : $config->getData($path));
+        $events = new \ReflectionProperty(Feed::class, '_eventManager');
+        $events->setValue($feed, $this->createMock(\Magento\Framework\Event\ManagerInterface::class));
+        set_error_handler(static function (int $severity, string $message): never {
+            throw new \ErrorException($message, 0, $severity);
+        });
+        try {
+            $feed->beforeSave();
+        } finally {
+            restore_error_handler();
+        }
+        $saved = $config->getData('columns_product_columns')[0];
+        self::assertSame('shipping weight', $saved['column']);
+        self::assertNull($saved['param']);
+        self::assertSame(0, $saved['order']);
+    }
+
     public function testGenerateCommandLoadsWithInstalledSymfony(): void
     {
         $this->assertCommandLoads('GenerateCommand');

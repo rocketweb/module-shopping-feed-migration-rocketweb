@@ -55,15 +55,16 @@ class Planner
                 if (!$static && str_starts_with($attribute, 'directive_') && !isset($new['directives'][$attribute])) {
                     throw new \DomainException('A configured column uses a directive unavailable in the destination: ' . $path);
                 }
-                if (array_key_exists('param', $column) && $column['param'] === null) {
-                    // Legacy XML emits null for empty parameters; PHP string mappers require an empty string.
+                if ($attribute === 'directive_url' && array_key_exists('param', $column) && $column['param'] === null) {
+                    // Older destination URL mappers need a string. Other mappers use null for defaults.
                     $config[$path][$key]['param'] = '';
                     $normalized++;
                 }
             }
             if ($normalized > 0) {
                 $changes[] = ['setting' => $path, 'action' => sprintf(
-                    'Convert %d null column parameter(s) to empty strings for destination compatibility.',
+                    'Convert %d null URL parameter(s) to empty strings for destination compatibility; '
+                    . 'preserve other defaults.',
                     $normalized
                 )];
             }

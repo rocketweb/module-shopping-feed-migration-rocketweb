@@ -1,13 +1,14 @@
 # Rocket Web 2.3.4 runtime compatibility
 
-Opt-in patches are available for the original `rocketweb/module-shopping-feeds:2.3.4` and `rocketweb/module-shopping-feeds-google:2.3.4` packages. They were tested with Mage-OS 3.5.0, PHP 8.4.24, and Symfony Console 7.4.17. Installing this migration module does not apply these patches or install a patching plugin.
+Opt-in patches are available for the original `rocketweb/module-shopping-feeds:2.3.4` and `rocketweb/module-shopping-feeds-google:2.3.4` packages. The September version was tested with Mage-OS 3.5.0, PHP 8.4.24, and Symfony Console 7.4.17. The current version additionally handles feed saves and passed full generation on Magento Open Source 2.4.8 / PHP 8.4.24 / Symfony Console 6.4.47. Installing this migration module does not apply these patches or install a patching plugin.
 
-The base patch changes seven legacy files; the Google patch changes one add-on file:
+The base patch changes eight legacy files; the Google patch changes one add-on file:
 
 | File | Correction |
 | --- | --- |
 | `Console/Command/GenerateCommand.php` | Adds Symfony's required `int` return type |
 | `Console/Command/ScheduleCommand.php` | Adds Symfony's required `int` return type |
+| `Model/Feed.php` | Cleans strings without passing null to `strtr()` during native full generation; preserves null mapper defaults and numeric values |
 | `Model/Product/Mapper/Generic/Simple/AdditionalImageLink.php` | Gets the feed through the adapter and replaces nonexistent `strip()` with `trim()` |
 | `Model/Product/Mapper/Generic/Simple/Shipping.php` | Checks country configuration is an array before filtering it; unset shipping produces an empty field |
 | `Model/Product/Mapper/Generic/{Simple,Configurable/Associated,Grouped/Associated}/Url.php` | Treats null query parameters as empty strings while preserving configured query strings and variant links |
@@ -76,6 +77,8 @@ For an `app/code` installation, apply the reviewed diff through that installatio
 
 ## Validation and reversal
 
+The October 3 published-release acceptance reproduced the feed-save failure before adding its regression test and patch. The current compatibility suite passes **24 tests, 58 assertions** on Magento Open Source 2.4.8. See [the release acceptance record](ACCEPTANCE-PUBLISHED-1.2.0.md). The historical September Composer result below used the earlier eight-file combined patch; current checksums are in the linked manifests.
+
 The separate compatibility suite exercises actual legacy classes against installed Magento/Symfony dependencies:
 
 ```sh
@@ -89,4 +92,4 @@ Twenty-three tests and 55 assertions passed after Composer reinstalled and patch
 
 The preflight rejected a synthetic customization and another package version. Reversing the patch in an isolated copy restored every original hash. To remove it from a Composer project, remove only its definition, relock patches, and rebuild/reinstall the legacy package through the reviewed deployment process. Reversal restores the original runtime defects; it is not a working Mage-OS 3.5 configuration. Use the backed-up compatible code/platform when reversing a deployment.
 
-The complete patches passed Mage-OS `setup:upgrade`, DI compilation, CLI test-product generation, and expanded feed generation. See [compatibility evidence](evidence/2026-09-30-legacy-compatibility.json) and the [acceptance record](ACCEPTANCE-2026-09-30.md). No existing store or external recipient was changed.
+The September patches passed Mage-OS `setup:upgrade`, DI compilation, CLI test-product generation, and expanded feed generation. See [compatibility evidence](evidence/2026-09-30-legacy-compatibility.json) and the [acceptance record](ACCEPTANCE-2026-09-30.md). The additional feed-save correction is covered by the October Magento acceptance above. No existing store or external recipient was changed.
